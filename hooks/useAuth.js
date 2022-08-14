@@ -38,6 +38,10 @@ export const AuthProvider = ({ children }) => {
         ],
       });
 
+      console.log(credential);
+
+      return;
+
       let appleEmail = await SecureStore.getItemAsync('appleEmail');
 
       if (!appleEmail) {

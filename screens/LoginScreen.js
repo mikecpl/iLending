@@ -3,8 +3,11 @@ import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import useAuth from '../hooks/useAuth';
 
 const LoginScreen = () => {
+  const { appleLogin } = useAuth();
+
   return (
     <View className="flex-1">
       <StatusBar style="light" />
@@ -34,23 +37,7 @@ const LoginScreen = () => {
             buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
             cornerRadius={5}
             style={{ width: 250, height: 44 }}
-            onPress={async () => {
-              try {
-                const credential = await AppleAuthentication.signInAsync({
-                  requestedScopes: [
-                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                  ],
-                });
-                // signed in
-              } catch (e) {
-                if (e.code === 'ERR_CANCELED') {
-                  // handle that the user canceled the sign-in flow
-                } else {
-                  // handle other errors
-                }
-              }
-            }}
+            onPress={appleLogin}
           />
         </View>
       </SafeAreaView>
