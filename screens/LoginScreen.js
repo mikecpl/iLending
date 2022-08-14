@@ -9,7 +9,8 @@ const LoginScreen = () => {
     <View className="flex-1">
       <StatusBar style="light" />
       <LinearGradient
-        colors={['#FF826F', '#FC406F', '#F70039']}
+        //colors={['#FF826F', '#FC406F', '#F70039']}
+        colors={['#F87171', '#F43F5E', '#BE123C']} // red-400, rose-500, rose-700
         className="h-full w-full absolute"
       />
       <SafeAreaView className="flex-1 flex-col items-center justify-evenly">
