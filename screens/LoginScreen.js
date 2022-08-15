@@ -1,6 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons/faHandHoldingDollar';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { StatusBar } from 'expo-status-bar';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import useAuth from '../hooks/useAuth';
@@ -19,8 +21,6 @@ const LoginScreen = () => {
     clientId: Constants.manifest.extra.firebase.googleClientId,
   });
 
-  // TODO ikonok
-
   useEffect(() => {
     if (response?.type === 'success') {
       googleLogin(response.params.id_token);
@@ -31,17 +31,16 @@ const LoginScreen = () => {
     <View className="flex-1">
       <StatusBar style="light" />
       <LinearGradient
-        //colors={['#FF826F', '#FC406F', '#F70039']}
         colors={['#F87171', '#F43F5E', '#BE123C']} // red-400, rose-500, rose-700
         className="h-full w-full absolute"
       />
       <SafeAreaView className="flex-1 flex-col items-center justify-evenly">
         <View className="flex flex-col items-center">
-          {/* <FontAwesome5
-            name="hand-holding-usd"
+          <FontAwesomeIcon
+            icon={faHandHoldingDollar}
             size={48}
             color="white"
-          /> */}
+          />
           <Text className="text-white text-3xl mt-8">iLending</Text>
           <Text className="text-gray-200 text-sm">Handle your debts and lendings easily</Text>
         </View>
@@ -54,7 +53,11 @@ const LoginScreen = () => {
               })
             }}
           >
-            {/* <FontAwesome5 name="google" size={12} color="black" /> */}
+            <FontAwesomeIcon
+              icon={faGoogle}
+              size={12}
+              color="black"
+            />
             <Text className="text-base font-semibold">Sign in with Google</Text>
           </TouchableOpacity>
 
