@@ -2,11 +2,25 @@ import React, { createContext, useContext, useEffect, useId, useMemo, useState }
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import { initializeApp } from 'firebase/app';
+import { getReactNativePersistence, initializeAuth } from 'firebase/auth/react-native';
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constants from 'expo-constants';
 
 const AuthContext = createContext({});
+const firebaseConfig = {
+  apiKey: Constants.manifest.extra.firebase.apiKey,
+  authDomain: Constants.manifest.extra.firebase.authDomain,
+  projectId: Constants.manifest.extra.firebase.projectId,
+  storageBucket: Constants.manifest.extra.firebase.storageBucket,
+  messagingSenderId: Constants.manifest.extra.firebase.messagingSenderId,
+  appId: Constants.manifest.extra.firebase.appId,
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [firebaseApp, setFirebaseApp] = useState(null);
   const [isLoadingInitial, setIsLoadingInitial] = useState(true);
 
   useEffect(() => {
@@ -15,6 +29,7 @@ export const AuthProvider = ({ children }) => {
 
       setUser(JSON.parse(userObject));
       setIsLoadingInitial(false);
+      setFirebaseApp(initializeApp(firebaseConfig));
     };
 
     load();
@@ -24,6 +39,17 @@ export const AuthProvider = ({ children }) => {
     setUser(userObject);
     SecureStore.setItemAsync('user', JSON.stringify(userObject));
   }
+
+  const googleLogin = (idToken) => {
+    const auth = initializeAuth(firebaseApp, {
+      persistence: getReactNativePersistence(AsyncStorage)
+    });
+    const credential = GoogleAuthProvider.credential(idToken);
+    signInWithCredential(auth, credential).then(res => {
+      // TODO save to firebase
+      console.log(res);
+    }).catch(() => { });
+  };
 
   const appleLogin = async () => {
     if (Platform.OS === 'android') {
@@ -66,13 +92,13 @@ export const AuthProvider = ({ children }) => {
         .catch(showErrorToast('Hiba történt! Kérjük, próbáld újra!'));
     } catch (e) {
       if (e.code !== 'ERR_CANCELED') {
-        showErrorToast('Hiba történt! Kérjük, próbáld újra!');
+        //showErrorToast('Hiba történt! Kérjük, próbáld újra!');
       }
     }
   };
 
   const logout = async () => {
-    // TODO
+    clearUser();
   };
 
   const clearUser = async () => {
@@ -82,11 +108,13 @@ export const AuthProvider = ({ children }) => {
 
   const memoedValue = useMemo(() => ({
     user,
+    firebaseApp,
+    googleLogin,
     appleLogin,
     handleLoginSuccess,
     logout,
     clearUser
-  }), [user]);
+  }), [user, firebaseApp]);
 
   return (
     <AuthContext.Provider value={memoedValue}>
