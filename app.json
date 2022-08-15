@@ -5,7 +5,7 @@
     "owner": "mikecpl",
     "scheme": "https://auth.expo.io/@mikecpl/ilending",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -20,7 +20,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "hu.mikecpl.ilending",
+      "buildNumber": "1",
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
     },
     "android": {
       "adaptiveIcon": {
