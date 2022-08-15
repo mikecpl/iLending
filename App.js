@@ -4,10 +4,10 @@ import StackNavigation from './navigation/StackNavigation';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      <AuthProvider>
         <StackNavigation />
-      </NavigationContainer>
-    </AuthProvider>
+      </AuthProvider>
+    </NavigationContainer>
   );
 }
