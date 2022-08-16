@@ -2,25 +2,13 @@ import React, { createContext, useContext, useEffect, useId, useMemo, useState }
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { initializeApp } from 'firebase/app';
-import { getReactNativePersistence, initializeAuth } from 'firebase/auth/react-native';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Constants from 'expo-constants';
+import { auth } from '../firebase';
 
 const AuthContext = createContext({});
-const firebaseConfig = {
-  apiKey: Constants.manifest.extra.firebase.apiKey,
-  authDomain: Constants.manifest.extra.firebase.authDomain,
-  projectId: Constants.manifest.extra.firebase.projectId,
-  storageBucket: Constants.manifest.extra.firebase.storageBucket,
-  messagingSenderId: Constants.manifest.extra.firebase.messagingSenderId,
-  appId: Constants.manifest.extra.firebase.appId,
-};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [firebaseApp, setFirebaseApp] = useState(null);
   const [isLoadingInitial, setIsLoadingInitial] = useState(true);
 
   useEffect(() => {
@@ -29,7 +17,6 @@ export const AuthProvider = ({ children }) => {
 
       setUser(JSON.parse(userObject));
       setIsLoadingInitial(false);
-      setFirebaseApp(initializeApp(firebaseConfig));
     };
 
     load();
@@ -41,10 +28,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   const googleLogin = (idToken) => {
-    const auth = initializeAuth(firebaseApp, {
-      persistence: getReactNativePersistence(AsyncStorage)
-    });
     const credential = GoogleAuthProvider.credential(idToken);
+
     signInWithCredential(auth, credential).then(res => {
       // TODO save to firebase
       console.log(res);
@@ -108,13 +93,12 @@ export const AuthProvider = ({ children }) => {
 
   const memoedValue = useMemo(() => ({
     user,
-    firebaseApp,
     googleLogin,
     appleLogin,
     handleLoginSuccess,
     logout,
     clearUser
-  }), [user, firebaseApp]);
+  }), [user]);
 
   return (
     <AuthContext.Provider value={memoedValue}>
