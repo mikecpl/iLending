@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useEffect, useId, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { auth } from '../firebase';
-import { GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut } from 'firebase/auth/react-native';
+import { GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut, OAuthProvider } from 'firebase/auth/react-native';
 
 const AuthContext = createContext({});
 
@@ -40,48 +39,37 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  // TODO for prod build https://medium.com/nerd-for-tech/apple-google-authentication-in-expo-apps-using-firebase-997125440032
+
   const appleLogin = async () => {
     if (Platform.OS === 'android') {
       return;
     }
 
     try {
-      const credential = await AppleAuthentication.signInAsync({
+      setIsLoading(true);
+
+      const appleCredential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
         ],
       });
 
-      console.log(credential);
+      const { identityToken } = appleCredential;
+      const provider = new OAuthProvider('apple.com');
+      const credential = provider.credential({
+        idToken: identityToken
+      });
 
-      return;
-
-      let appleEmail = await SecureStore.getItemAsync('appleEmail');
-
-      if (!appleEmail) {
-        appleEmail = credential.email;
-        SecureStore.setItemAsync('appleEmail', credential.email);
-      }
-
-      let deviceToken = await SecureStore.getItemAsync('deviceToken');
-
-      if (!deviceToken) {
-        deviceToken = useId();
-      }
-
-      axios.post('/api/mobile/social-login/apple_mobile', {
-        userId: credential.user,
-        email: appleEmail,
-        code: credential.authorizationCode,
-        devicePlatform: Platform.OS,
-        deviceToken
-      })
-        .then((response) => handleLoginSuccess(response.data.data, deviceToken))
-        .catch(showErrorToast('Hiba történt! Kérjük, próbáld újra!'));
+      signInWithCredential(auth, credential).catch((e) => {
+        // TODO error handling with toastr  
+      }).finally(() => {
+        setIsLoading(false);
+      });
     } catch (e) {
       if (e.code !== 'ERR_CANCELED') {
-        //showErrorToast('Hiba történt! Kérjük, próbáld újra!');
+        // TODO error handling with toastr
       }
     }
   };
