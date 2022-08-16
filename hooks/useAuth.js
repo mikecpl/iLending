@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth/react-native';
 
 const AuthContext = createContext({});
 
@@ -11,16 +12,18 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoadingInitial, setIsLoadingInitial] = useState(true);
 
-  useEffect(() => {
-    const load = async () => {
-      const userObject = await SecureStore.getItemAsync('user');
+  useEffect(
+    () => onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
 
-      setUser(JSON.parse(userObject));
       setIsLoadingInitial(false);
-    };
-
-    load();
-  }, []);
+    }),
+    []
+  );
 
   const handleLoginSuccess = (userObject) => {
     setUser(userObject);
