@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import { initializeApp } from 'firebase/app';
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth/react-native';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeAuth, getReactNativePersistence, getAuth } from 'firebase/auth/react-native';
 import { getFirestore } from 'firebase/firestore';
+
+// TODO Google hashprints
 
 const firebaseConfig = {
   apiKey: Constants.manifest.extra.firebase.apiKey,
@@ -13,10 +15,18 @@ const firebaseConfig = {
   appId: Constants.manifest.extra.firebase.appId,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage)
-});
+const isAppInitalized = getApps().length > 0;
+
+const app = !isAppInitalized
+  ? initializeApp(firebaseConfig)
+  : getApp();
+
+const auth = !isAppInitalized
+  ? initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  })
+  : getAuth();
+
 const db = getFirestore();
 
-export { app, auth, db };
+export { auth, db };
