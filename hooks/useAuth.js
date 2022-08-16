@@ -2,15 +2,15 @@ import React, { createContext, useContext, useEffect, useId, useMemo, useState }
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth/react-native';
+import { GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut } from 'firebase/auth/react-native';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoadingInitial, setIsLoadingInitial] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(
     () => onAuthStateChanged(auth, (user) => {
@@ -26,17 +26,18 @@ export const AuthProvider = ({ children }) => {
   );
 
   const handleLoginSuccess = (userObject) => {
-    setUser(userObject);
-    SecureStore.setItemAsync('user', JSON.stringify(userObject));
+    // TODO
   }
 
   const googleLogin = (idToken) => {
+    setIsLoading(true);
     const credential = GoogleAuthProvider.credential(idToken);
 
-    signInWithCredential(auth, credential).then(res => {
-      // TODO save to firebase
-      console.log(res);
-    }).catch(() => { });
+    signInWithCredential(auth, credential).catch(() => {
+      // TODO error handling with toastr
+    }).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   const appleLogin = async () => {
@@ -86,22 +87,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    clearUser();
-  };
+    setIsLoading(true);
 
-  const clearUser = async () => {
-    setUser(null);
-    SecureStore.deleteItemAsync('user');
+    signOut(auth).catch({
+      // TODO error handling with toastr
+    }).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   const memoedValue = useMemo(() => ({
     user,
+    isLoading,
     googleLogin,
     appleLogin,
-    handleLoginSuccess,
-    logout,
-    clearUser
-  }), [user]);
+    logout
+  }), [user, isLoading]);
 
   return (
     <AuthContext.Provider value={memoedValue}>
