@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { auth } from '../firebase';
 import { GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut, OAuthProvider } from 'firebase/auth/react-native';
+import { errorToast } from '../components/app/toast';
 
 const AuthContext = createContext({});
 
@@ -24,16 +25,12 @@ export const AuthProvider = ({ children }) => {
     []
   );
 
-  const handleLoginSuccess = (userObject) => {
-    // TODO
-  }
-
   const googleLogin = (idToken) => {
     setIsLoading(true);
     const credential = GoogleAuthProvider.credential(idToken);
 
     signInWithCredential(auth, credential).catch(() => {
-      // TODO error handling with toastr
+      errorToast();
     }).finally(() => {
       setIsLoading(false);
     });
@@ -62,14 +59,14 @@ export const AuthProvider = ({ children }) => {
         idToken: identityToken
       });
 
-      signInWithCredential(auth, credential).catch((e) => {
-        // TODO error handling with toastr  
+      signInWithCredential(auth, credential).catch(() => {
+        errorToast();
       }).finally(() => {
         setIsLoading(false);
       });
     } catch (e) {
       if (e.code !== 'ERR_CANCELED') {
-        // TODO error handling with toastr
+        errorToast();
       }
     }
   };
@@ -77,8 +74,8 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setIsLoading(true);
 
-    signOut(auth).catch({
-      // TODO error handling with toastr
+    signOut(auth).catch(() => {
+      errorToast();
     }).finally(() => {
       setIsLoading(false);
     });
