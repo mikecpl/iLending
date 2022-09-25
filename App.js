@@ -4,6 +4,7 @@ import StackNavigation from './navigation/StackNavigation';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { useFonts, Raleway_600SemiBold, Raleway_700Bold } from '@expo-google-fonts/raleway';
 import Loader from './components/app/Loader';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -17,6 +18,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar style="light" />
       <RootSiblingParent>
         <AuthProvider>
           <StackNavigation />

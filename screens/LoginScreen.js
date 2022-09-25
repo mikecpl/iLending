@@ -3,7 +3,6 @@ import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons/faHandHoldingDollar';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { StatusBar } from 'expo-status-bar';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import useAuth from '../hooks/useAuth';
 import { useEffect } from 'react';
@@ -29,7 +28,6 @@ const LoginScreen = () => {
 
   return (
     <View className="flex-1">
-      <StatusBar style="light" />
       <LinearGradient
         colors={['#F87171', '#F43F5E', '#BE123C']} // red-400, rose-500, rose-700
         className="h-full w-full absolute"
