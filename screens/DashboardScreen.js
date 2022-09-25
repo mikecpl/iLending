@@ -52,7 +52,7 @@ const DashboardScreen = () => {
             </CustomText>
           </View>
           <View className="flex flex-col p-4">
-            <CustomText fontType="semibold" className="text-rose-100 text-lg">
+            <CustomText className="text-rose-100 text-lg">
               Pending payments
             </CustomText>
             <View className="flex flex-col">
