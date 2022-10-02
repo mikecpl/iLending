@@ -5,6 +5,8 @@ import DashboardScreen from '../screens/DashboardScreen';
 import LoanScreen from '../screens/LoanScreen';
 import DebtScreen from '../screens/DebtScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import colors from 'tailwindcss/colors';
+import * as iLendingColors from '../etc/colors';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -13,7 +15,10 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#BE123C'
+        tabBarActiveTintColor: colors.sky[400],
+        tabBarStyle: {
+          backgroundColor: iLendingColors.ilending[900]
+        }
       }}>
       <Tab.Screen name="Dashboard"
         component={DashboardScreen}

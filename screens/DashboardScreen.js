@@ -3,82 +3,102 @@ import React from 'react';
 import useAuth from '../hooks/useAuth';
 import CustomText from '../components/app/CustomText';
 import { LinearGradient } from 'expo-linear-gradient';
-import DashboardCard from '../components/dashboard/DashboardCard';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowRight, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp, faBell } from '@fortawesome/free-solid-svg-icons';
+import * as iLendingColors from '../etc/colors';
+import colors from 'tailwindcss/colors';
+import PaymentCard from '../components/dashboard/PaymentCard';
 
 const DashboardScreen = () => {
   const { user } = useAuth();
-  const renderPendingPaymentActions = () => (
-    <>
-      <TouchableOpacity className="p-2">
-        <FontAwesomeIcon icon={faCheck} color="#16A34A" size={18} />
-      </TouchableOpacity>
-      <TouchableOpacity className="p-2">
-        <FontAwesomeIcon icon={faTimes} color="#BE123C" size={18} />
-      </TouchableOpacity>
-    </>
-  );
-
-  const renderLoanActions = () => (
-    <TouchableOpacity className="flex flex-row space-x-2 p-2">
-      <CustomText className="text-rose-700">
-        View
-      </CustomText>
-      <FontAwesomeIcon icon={faArrowRight} color="#BE123C" size={16} />
-    </TouchableOpacity>
-  );
-
-  const renderDebtActions = () => (
-    <TouchableOpacity className="flex flex-row space-x-2 p-2">
-      <CustomText className="text-rose-700">
-        View
-      </CustomText>
-      <FontAwesomeIcon icon={faArrowRight} color="#BE123C" size={16} />
-    </TouchableOpacity>
-  );
 
   return (
-    <View>
+    <View className="flex-1">
       <LinearGradient
-        colors={['#F87171', '#F43F5E', '#BE123C']} // red-400, rose-500, rose-700
+        colors={[iLendingColors.ilending[800], iLendingColors.ilending[800], iLendingColors.ilending[900]]}
         className="h-full w-full absolute"
       />
       <SafeAreaView className="">
-        <ScrollView>
-          <View className="p-4">
-            <CustomText className="text-white text-3xl">
-              Welcome {user?.displayName ?? 'my friend'}!
+        <ScrollView className="flex flex-col grow space-y-4 p-4">
+          <View className="flex flex-row justify-between">
+            <CustomText className="text-white dark:text-black text-2xl">
+              Welcome {user.displayName ?? 'my friend'}!
             </CustomText>
+            <TouchableOpacity className="p-2">
+              <FontAwesomeIcon icon={faBell} color={colors.white} size={18} />
+            </TouchableOpacity>
           </View>
-          <View className="flex flex-col p-4">
-            <CustomText className="text-rose-100 text-lg">
-              Pending payments
-            </CustomText>
-            <View className="flex flex-col">
-              <DashboardCard text="User" subText="$300" renderActions={renderPendingPaymentActions} />
-              <DashboardCard text="User" subText="$300" renderActions={renderPendingPaymentActions} />
-              <DashboardCard text="User" subText="$300" renderActions={renderPendingPaymentActions} />
+
+          <View className="h-48">
+            <View className="flex flex-col justify-between bg-ilending-900 h-full w-full rounded-lg p-4">
+              <View className="flex flex-col items-center">
+                <CustomText className="text-sky-400">
+                  Total balance
+                </CustomText>
+                <CustomText className="text-white text-2xl">
+                  $5 000
+                </CustomText>
+              </View>
+              <View className="flex flex-row justify-between p-2 rounded-xl bg-ilending-800">
+                <View className="grow items-center">
+                  <CustomText className="text-white text-lg">
+                    Debts
+                  </CustomText>
+                  <CustomText className="text-white text-lg">
+                    $500
+                  </CustomText>
+                </View>
+                <View className="grow items-center">
+                  <CustomText className="text-white text-lg">
+                    Loans
+                  </CustomText>
+                  <CustomText className="text-white text-lg">
+                    $1 500
+                  </CustomText>
+                </View>
+              </View>
             </View>
           </View>
-          <View className="flex flex-col p-4">
-            <CustomText className="text-rose-100 text-lg">
-              Loans
-            </CustomText>
-            <View className="flex flex-col">
-              <DashboardCard text="User" subText="Loan" renderActions={renderLoanActions} />
-              <DashboardCard text="User" subText="Loan" renderActions={renderLoanActions} />
-              <DashboardCard text="User" subText="Loan" renderActions={renderLoanActions} />
-            </View>
+
+          <View className="flex flex-row justify-between rounded-xl space-x-4 mb-8">
+            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-sky-400 rounded-lg p-3">
+              <FontAwesomeIcon icon={faArrowUp} color={colors.black} size={18} />
+              <CustomText className="text-lg text-black">
+                Debt
+              </CustomText>
+            </TouchableOpacity>
+
+            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-900 rounded-lg p-3">
+              <FontAwesomeIcon icon={faArrowDown} color={colors.white} size={18} />
+              <CustomText className="text-lg text-white">
+                Loan
+              </CustomText>
+            </TouchableOpacity>
           </View>
-          <View className="flex flex-col p-4">
-            <CustomText className="text-rose-100 text-lg">
-              Debts
-            </CustomText>
+
+          <View className="mb-4">
+            <View className="flex flex-row justify-between items-start">
+              <CustomText className="text-white text-lg">
+                Payments
+              </CustomText>
+              <TouchableOpacity className="p-2">
+                <CustomText className="text-white">
+                  See all
+                </CustomText>
+              </TouchableOpacity>
+            </View>
+
             <View className="flex flex-col">
-              <DashboardCard text="User" subText="Debt" renderActions={renderDebtActions} />
-              <DashboardCard text="User" subText="Debt" renderActions={renderDebtActions} />
-              <DashboardCard text="User" subText="Debt" renderActions={renderDebtActions} />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
+              <PaymentCard />
             </View>
           </View>
         </ScrollView>

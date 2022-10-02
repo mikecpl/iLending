@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons/faHandHoldingDollar';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -10,6 +10,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import Constants from 'expo-constants';
+import CustomText from '../components/app/CustomText';
+import * as iLendingColors from '../etc/colors';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -29,7 +31,7 @@ const LoginScreen = () => {
   return (
     <View className="flex-1">
       <LinearGradient
-        colors={['#F87171', '#F43F5E', '#BE123C']} // red-400, rose-500, rose-700
+        colors={[iLendingColors.ilending[800], iLendingColors.ilending[800], iLendingColors.ilending[900]]}
         className="h-full w-full absolute"
       />
       <SafeAreaView className="flex-1 flex-col items-center justify-evenly">
@@ -39,10 +41,14 @@ const LoginScreen = () => {
             size={48}
             color="white"
           />
-          <Text className="text-white text-3xl mt-8">iLending</Text>
-          <Text className="text-gray-200 text-sm">Handle your debts and lendings easily</Text>
+          <CustomText className="text-white text-4xl mt-8">
+            iLending
+          </CustomText>
+          <CustomText className="text-slate-500 text-base">
+            Handle your debts and loans easily
+          </CustomText>
         </View>
-        <View className="flex flex-col space-y-2">
+        <View className="flex flex-col w-full px-6 space-y-2">
           <TouchableOpacity
             className="flex flex-row items-center justify-center space-x-2 h-11 bg-white rounded-md"
             onPress={() => {
@@ -59,13 +65,15 @@ const LoginScreen = () => {
             <Text className="text-base font-semibold">Sign in with Google</Text>
           </TouchableOpacity>
 
-          <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
-            cornerRadius={5}
-            style={{ width: 250, height: 44 }}
-            onPress={appleLogin}
-          />
+          {Platform.OS === 'ios' &&
+            <AppleAuthentication.AppleAuthenticationButton
+              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
+              cornerRadius={5}
+              style={{ width: '100%', height: 44 }}
+              onPress={appleLogin}
+            />
+          }
         </View>
       </SafeAreaView>
     </View>
