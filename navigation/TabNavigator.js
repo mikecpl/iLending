@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { faHome, faNewspaper, faStore, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faMoneyBill, faMoneyBillTrendUp, faNewspaper, faReceipt, faStore, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import DashboardScreen from '../screens/DashboardScreen';
 import LoanScreen from '../screens/LoanScreen';
@@ -15,7 +15,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.sky[400],
+        tabBarActiveTintColor: iLendingColors['ilending-sky'][600],
         tabBarStyle: {
           backgroundColor: iLendingColors.ilending[900]
         }
@@ -29,21 +29,21 @@ const TabNavigator = () => {
           ),
         }} />
 
-      <Tab.Screen name="Loan"
-        component={LoanScreen}
-        options={{
-          tabBarLabel: 'Loans',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faStore} color={color} size={size} />
-          )
-        }} />
-
       <Tab.Screen name="Debt"
         component={DebtScreen}
         options={{
           tabBarLabel: 'Debts',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faNewspaper} color={color} size={size} />
+            <FontAwesomeIcon icon={faReceipt} color={color} size={size} />
+          )
+        }} />
+
+      <Tab.Screen name="Loan"
+        component={LoanScreen}
+        options={{
+          tabBarLabel: 'Loans',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesomeIcon icon={faMoneyBillTrendUp} color={color} size={size} />
           )
         }} />
 
