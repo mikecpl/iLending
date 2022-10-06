@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons/faHandHoldingDollar';
@@ -11,7 +10,7 @@ import * as AuthSession from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import Constants from 'expo-constants';
 import CustomText from '../components/app/CustomText';
-import * as iLendingColors from '../etc/colors';
+import Background from '../components/app/Background';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -30,10 +29,7 @@ const LoginScreen = () => {
 
   return (
     <View className="flex-1">
-      <LinearGradient
-        colors={[iLendingColors.ilending[800], iLendingColors.ilending[800], iLendingColors.ilending[900]]}
-        className="h-full w-full absolute"
-      />
+      <Background />
       <SafeAreaView className="flex-1 flex-col items-center justify-evenly">
         <View className="flex flex-col items-center">
           <FontAwesomeIcon
@@ -44,7 +40,7 @@ const LoginScreen = () => {
           <CustomText className="text-white text-4xl mt-8">
             iLending
           </CustomText>
-          <CustomText className="text-slate-500 text-base">
+          <CustomText className="text-slate-400 text-base">
             Handle your debts and loans easily
           </CustomText>
         </View>

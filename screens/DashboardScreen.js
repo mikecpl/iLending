@@ -2,22 +2,20 @@ import { SafeAreaView, TouchableOpacity, View, ScrollView, ImageBackground } fro
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import CustomText from '../components/app/CustomText';
-import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowDown, faArrowUp, faBell } from '@fortawesome/free-solid-svg-icons';
-import * as iLendingColors from '../etc/colors';
 import colors from 'tailwindcss/colors';
 import PaymentCard from '../components/dashboard/PaymentCard';
+import { useNavigation } from '@react-navigation/native';
+import Background from '../components/app/Background';
 
 const DashboardScreen = () => {
   const { user } = useAuth();
+  const navigation = useNavigation();
 
   return (
     <View className="flex-1">
-      <LinearGradient
-        colors={[iLendingColors.ilending[800], iLendingColors.ilending[800], iLendingColors.ilending[900]]}
-        className="h-full w-full absolute"
-      />
+      <Background />
       <SafeAreaView>
         <ScrollView className="flex flex-col grow space-y-4 p-4">
           <View className="flex flex-row justify-between mb-4">
@@ -25,7 +23,7 @@ const DashboardScreen = () => {
               Welcome {user.displayName ?? 'my friend'}!
             </CustomText>
             <TouchableOpacity className="p-2">
-              <FontAwesomeIcon icon={faBell} color={colors.white} size={18} />
+              <FontAwesomeIcon icon={faBell} color={colors.white} size={22} />
             </TouchableOpacity>
           </View>
 
@@ -65,7 +63,9 @@ const DashboardScreen = () => {
           </View>
 
           <View className="flex flex-row justify-between rounded-xl space-x-4 mb-8">
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3">
+            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
+              onPress={() => navigation.navigate('PaymentModal')}
+            >
               <FontAwesomeIcon icon={faArrowUp} color={colors.white} size={18} />
               <CustomText className="text-lg text-white">
                 Debt
