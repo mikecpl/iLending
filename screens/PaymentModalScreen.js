@@ -13,15 +13,13 @@ const PaymentModalScreen = () => {
   return (
     <View className="flex-1">
       <Background />
-      <View className="h-12 flex flex-row items-center px-4">
-        <TouchableOpacity className="grow"
-          onPress={() => navigation.goBack()}
-        >
-          <FontAwesomeIcon icon={faTimes} color={colors.white} size={18} />
-        </TouchableOpacity>
-        <CustomText className="text-xl text-white grow">
+      <View className="h-12 flex flex-row justify-between items-center px-4">
+        <CustomText className="text-xl text-white m-auto">
           Somogyi Gergő
         </CustomText>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <FontAwesomeIcon icon={faTimes} color={colors.white} size={18} />
+        </TouchableOpacity>
       </View>
       <ScrollView>
         <CustomText>TODO</CustomText>
