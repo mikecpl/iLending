@@ -1,11 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { faHome, faMoneyBill, faMoneyBillTrendUp, faNewspaper, faReceipt, faStore, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faMoneyBillTrendUp, faReceipt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import DashboardScreen from '../screens/DashboardScreen';
 import LoanScreen from '../screens/LoanScreen';
 import DebtScreen from '../screens/DebtScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import colors from 'tailwindcss/colors';
 import * as iLendingColors from '../etc/colors';
 
 const TabNavigator = () => {
