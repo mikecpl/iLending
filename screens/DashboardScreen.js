@@ -40,7 +40,7 @@ const DashboardScreen = () => {
                     $5 000
                   </CustomText>
                 </View>
-                <View className="flex flex-row justify-between p-2 rounded-xl bg-ilending-800">
+                <View className="flex flex-row justify-between p-2 rounded-xl bg-slate-800">
                   <View className="grow items-center justify-center">
                     <CustomText className="text-white">
                       Debts
@@ -72,7 +72,7 @@ const DashboardScreen = () => {
               </CustomText>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-900 rounded-lg p-3">
+            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3">
               <FontAwesomeIcon icon={faArrowDown} color={colors.white} size={18} />
               <CustomText className="text-lg text-white">
                 Loan
