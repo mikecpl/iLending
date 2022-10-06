@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import CustomText from '../components/app/CustomText';
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +23,9 @@ const PaymentModalScreen = () => {
           Somogyi Gergő
         </CustomText>
       </View>
+      <ScrollView>
+        <CustomText>TODO</CustomText>
+      </ScrollView>
     </View>
   )
 }

@@ -29,7 +29,7 @@ const DashboardScreen = () => {
 
           <View className="h-48 rounded-lg">
             <ImageBackground source={
-              require('../assets/credit_card.png')
+              require('../assets/credit-card.png')
             } resizeMode="cover" imageStyle={{borderRadius: 10}}>
               <View className="flex flex-col justify-end h-full w-full rounded-lg p-4">
                 <View className="flex flex-col items-start p-2">
