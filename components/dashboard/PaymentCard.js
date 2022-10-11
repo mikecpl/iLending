@@ -20,7 +20,7 @@ const PaymentCard = () => {
         <CustomText className="w-32 text-white text-base">
           Somogyi Gergő
         </CustomText>
-        <CustomText className="text-gray-500">
+        <CustomText className="text-slate-500">
           SPAR bevásárlás
         </CustomText>
       </View>

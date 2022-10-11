@@ -18,7 +18,7 @@ const DashboardScreen = () => {
       <Background />
       <SafeAreaView>
         <ScrollView className="flex flex-col grow space-y-4 p-4">
-          <View className="flex flex-row justify-between mb-4">
+          <View className="flex flex-row justify-between items-center mb-4">
             <CustomText className="text-white dark:text-black text-2xl">
               Welcome {user.displayName ?? 'my friend'}!
             </CustomText>
