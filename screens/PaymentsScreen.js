@@ -15,7 +15,7 @@ const PaymentScreen = () => {
     <View className="flex-1">
       <Background />
       <SafeAreaView>
-        <ScrollView className="flex flex-col grow space-y-4 p-4">
+        <ScrollView className="flex flex-col grow space-y-4 p-4 h-full">
           <View className="mb-4">
             <CustomText className="text-white dark:text-black text-2xl">
               Payments
