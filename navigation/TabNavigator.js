@@ -1,11 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { faHome, faMoneyBillTrendUp, faReceipt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faDollar, faHome, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import DashboardScreen from '../screens/DashboardScreen';
-import LoanScreen from '../screens/LoanScreen';
-import DebtScreen from '../screens/DebtScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import colors from 'tailwindcss/colors';
+import PeopleScreen from '../screens/PeopleScreen';
+import PaymentsScreen from '../screens/PaymentsScreen';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -28,21 +28,21 @@ const TabNavigator = () => {
           ),
         }} />
 
-      <Tab.Screen name="Debt"
-        component={DebtScreen}
+      <Tab.Screen name="Payments"
+        component={PaymentsScreen}
         options={{
-          tabBarLabel: 'Debts',
+          tabBarLabel: 'Payments',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faReceipt} color={color} size={size} />
+            <FontAwesomeIcon icon={faDollar} color={color} size={size} />
           )
         }} />
 
-      <Tab.Screen name="Loan"
-        component={LoanScreen}
+      <Tab.Screen name="People"
+        component={PeopleScreen}
         options={{
-          tabBarLabel: 'Loans',
+          tabBarLabel: 'People',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faMoneyBillTrendUp} color={color} size={size} />
+            <FontAwesomeIcon icon={faUsers} color={color} size={size} />
           )
         }} />
 
