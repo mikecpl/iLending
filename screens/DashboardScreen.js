@@ -5,7 +5,7 @@ import CustomText from '../components/app/CustomText';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowDown, faArrowUp, faBell } from '@fortawesome/free-solid-svg-icons';
 import colors from 'tailwindcss/colors';
-import PaymentCard from '../components/dashboard/PaymentCard';
+import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
 
@@ -85,7 +85,7 @@ const DashboardScreen = () => {
               <CustomText className="text-white text-lg">
                 Payments
               </CustomText>
-              <TouchableOpacity className="p-2">
+              <TouchableOpacity className="p-2" onPress={() => navigation.navigate('Payments')}>
                 <CustomText className="text-white">
                   See all
                 </CustomText>

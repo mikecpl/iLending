@@ -4,9 +4,10 @@ import CustomText from '../components/app/CustomText';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowDown, faArrowUp, faSearch } from '@fortawesome/free-solid-svg-icons';
 import colors from 'tailwindcss/colors';
-import PaymentCard from '../components/dashboard/PaymentCard';
+import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
+import SearchBar from '../components/app/SearchBar';
 
 const PaymentScreen = () => {
   const navigation = useNavigation();
@@ -40,17 +41,7 @@ const PaymentScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <View className="flex flex-row items-center space-x-2 bg-slate-700 px-2 py-1 rounded-lg">
-            <TouchableOpacity className="p-2">
-              <FontAwesomeIcon icon={faSearch} color={colors.slate[400]} size={18} />
-            </TouchableOpacity>
-            <TextInput className="text-white grow h-10 text-lg pt-1 pb-2 mr-2" 
-              multiline={true} 
-              blurOnSubmit={true}
-              placeholder="Search"
-              placeholderTextColor={colors.slate[400]} 
-            />
-          </View>
+          <SearchBar screenName="Payments" />
 
           <View>
             <View className="flex flex-row justify-between items-center">
