@@ -17,7 +17,8 @@ const TabNavigator = () => {
         tabBarActiveTintColor: colors.white,
         tabBarStyle: {
           backgroundColor: colors.slate[900]
-        }
+        },
+        tabBarShowLabel: false,
       }}>
       <Tab.Screen name="Dashboard"
         component={DashboardScreen}
