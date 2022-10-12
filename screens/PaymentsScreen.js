@@ -2,7 +2,7 @@ import { SafeAreaView, TouchableOpacity, View, ScrollView, TextInput } from 'rea
 import React from 'react';
 import CustomText from '../components/app/CustomText';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowDown, faArrowUp, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import colors from 'tailwindcss/colors';
 import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
@@ -16,7 +16,7 @@ const PaymentScreen = () => {
     <View className="flex-1">
       <Background />
       <SafeAreaView>
-        <ScrollView className="flex flex-col grow space-y-4 p-4 h-full">
+        <ScrollView className="flex flex-col grow space-y-2 p-4 h-full">
           <View className="mb-4">
             <CustomText className="text-white dark:text-black text-2xl">
               Payments
@@ -41,7 +41,9 @@ const PaymentScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <SearchBar screenName="Payments" />
+          <View>
+            <SearchBar screenName="Payments" />
+          </View>
 
           <View>
             <View className="flex flex-row justify-between items-center">
