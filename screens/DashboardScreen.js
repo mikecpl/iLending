@@ -2,12 +2,12 @@ import { SafeAreaView, TouchableOpacity, View, ScrollView, ImageBackground } fro
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import CustomText from '../components/app/CustomText';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowDown, faArrowUp, faBell } from '@fortawesome/free-solid-svg-icons';
 import colors from 'tailwindcss/colors';
 import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
+import { BellIcon } from 'react-native-heroicons/outline';
+import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
 
 const DashboardScreen = () => {
   const { user } = useAuth();
@@ -23,7 +23,7 @@ const DashboardScreen = () => {
               Welcome {user.displayName ?? 'my friend'}!
             </CustomText>
             <TouchableOpacity className="p-2">
-              <FontAwesomeIcon icon={faBell} color={colors.white} size={22} />
+              <BellIcon color={colors.white} size={24} />
             </TouchableOpacity>
           </View>
 
@@ -66,14 +66,14 @@ const DashboardScreen = () => {
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
               onPress={() => navigation.navigate('PaymentModal')}
             >
-              <FontAwesomeIcon icon={faArrowUp} color={colors.white} size={18} />
+              <ArrowUpIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
                 Debt
               </CustomText>
             </TouchableOpacity>
 
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3">
-              <FontAwesomeIcon icon={faArrowDown} color={colors.white} size={18} />
+              <ArrowDownIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
                 Loan
               </CustomText>

@@ -1,8 +1,7 @@
 import { SafeAreaView, TouchableOpacity, View, ScrollView } from 'react-native';
 import React from 'react';
 import CustomText from '../components/app/CustomText';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { UserPlusIcon } from 'react-native-heroicons/outline';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
@@ -23,7 +22,7 @@ const PeopleScreen = () => {
               People
             </CustomText>
             <TouchableOpacity className="p-2">
-              <FontAwesomeIcon icon={faUserPlus} color={colors.white} size={22} />
+              <UserPlusIcon color={colors.white} size={22} />
             </TouchableOpacity>
           </View>
 

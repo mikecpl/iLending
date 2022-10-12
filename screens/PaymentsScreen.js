@@ -1,8 +1,7 @@
 import { SafeAreaView, TouchableOpacity, View, ScrollView, TextInput } from 'react-native';
 import React from 'react';
 import CustomText from '../components/app/CustomText';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowDown, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
@@ -27,14 +26,14 @@ const PaymentScreen = () => {
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
               onPress={() => navigation.navigate('PaymentModal')}
             >
-              <FontAwesomeIcon icon={faArrowUp} color={colors.white} size={18} />
+              <ArrowUpIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
                 Debt
               </CustomText>
             </TouchableOpacity>
 
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3">
-              <FontAwesomeIcon icon={faArrowDown} color={colors.white} size={18} />
+              <ArrowDownIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
                 Loan
               </CustomText>

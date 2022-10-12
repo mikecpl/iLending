@@ -1,8 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import CustomText from '../app/CustomText';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { ArrowDownIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,7 +13,7 @@ const PaymentCard = () => {
       onPress={() => navigation.navigate('PaymentModal')}
     >
       <View className="bg-red-500 justify-center p-2 rounded-lg">
-        <FontAwesomeIcon icon={faArrowDown} color={colors.white} size={18} />
+        <ArrowDownIcon color={colors.white} size={20} />
       </View>
       <View className="flex flex-col grow justify-between pl-2 pr-4">
         <CustomText className="w-32 text-white text-base">

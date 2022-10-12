@@ -1,11 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { faDollar, faHome, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import DashboardScreen from '../screens/DashboardScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import colors from 'tailwindcss/colors';
 import PeopleScreen from '../screens/PeopleScreen';
 import PaymentsScreen from '../screens/PaymentsScreen';
+import { HomeIcon, BanknotesIcon, UserGroupIcon, UserIcon } from 'react-native-heroicons/outline';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -25,7 +24,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'Dashboard',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faHome} color={color} size={size} />
+            <HomeIcon color={color} size={size} />
           ),
         }} />
 
@@ -34,7 +33,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'Payments',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faDollar} color={color} size={size} />
+            <BanknotesIcon color={color} size={size} />
           )
         }} />
 
@@ -43,7 +42,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'People',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faUsers} color={color} size={size} />
+            <UserGroupIcon color={color} size={size} />
           )
         }} />
 
@@ -52,7 +51,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faUser} color={color} size={size} />
+            <UserIcon color={color} size={size} />
           )
         }} />
     </Tab.Navigator >

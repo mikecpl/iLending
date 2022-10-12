@@ -2,8 +2,8 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import CustomText from '../components/app/CustomText';
 import { useNavigation } from '@react-navigation/native';
-import { faBell, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { BellAlertIcon } from 'react-native-heroicons/outline';
+import { CheckIcon, XMarkIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import Background from '../components/app/Background';
 
@@ -17,8 +17,8 @@ const PaymentModalScreen = () => {
         <CustomText className="text-xl text-white m-auto">
           Somogyi Gergő
         </CustomText>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FontAwesomeIcon icon={faTimes} color={colors.white} size={18} />
+        <TouchableOpacity className="py-2" onPress={() => navigation.goBack()}>
+          <XMarkIcon color={colors.white} size={20} />
         </TouchableOpacity>
       </View>
       
@@ -93,7 +93,7 @@ const PaymentModalScreen = () => {
               <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-slate-800 rounded-lg p-3"
                 onPress={() => navigation.navigate('PaymentModal')}
               >
-                <FontAwesomeIcon icon={faBell} color={colors.white} size={18} />
+                <BellAlertIcon color={colors.white} size={22} />
                 <CustomText className="text-lg text-white">
                   Send a reminder
                 </CustomText>
@@ -118,14 +118,14 @@ const PaymentModalScreen = () => {
         <TouchableOpacity className="flex flex-row justify-center space-x-2 w-1/2 items-center bg-ilending-sky-600 rounded-lg p-3"
           onPress={() => navigation.navigate('PaymentModal')}
         >
-          <FontAwesomeIcon icon={faCheck} color={colors.white} size={18} />
+          <CheckIcon color={colors.white} size={20} />
           <CustomText className="text-base text-white">
             Complete
           </CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity className="flex flex-row justify-center space-x-2 w-1/2 items-center bg-red-500 rounded-lg p-3">
-          <FontAwesomeIcon icon={faTimes} color={colors.white} size={18} />
+          <XMarkIcon color={colors.white} size={20} />
           <CustomText className="text-base text-white">
             Deny
           </CustomText>

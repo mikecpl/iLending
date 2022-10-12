@@ -1,8 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import CustomText from '../app/CustomText';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowDown, faUser } from '@fortawesome/free-solid-svg-icons';
+import { UserIcon } from 'react-native-heroicons/outline';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,7 +13,7 @@ const PeopleCard = () => {
       onPress={() => navigation.navigate('PaymentModal')}
     >
       <View className="bg-slate-700 justify-center p-4 rounded-full">
-        <FontAwesomeIcon icon={faUser} color={colors.white} size={18} />
+        <UserIcon color={colors.white} size={20} />
       </View>
       <View className="flex flex-col grow justify-between pl-2 pr-4">
         <CustomText className="w-32 text-white text-base">
