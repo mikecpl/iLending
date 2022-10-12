@@ -11,6 +11,7 @@ import SearchBar from '../components/app/SearchBar';
 
 const PeopleScreen = () => {
   const navigation = useNavigation();
+  const people = [1, 2, 3];
 
   return (
     <View className="flex-1">
@@ -28,12 +29,12 @@ const PeopleScreen = () => {
 
           <SearchBar screenName="People" />
 
-          <View>
-            <View className="flex flex-col">
-              <PeopleCard />
-              <PeopleCard />
-              <PeopleCard />
-            </View>
+          <View className="flex flex-col space-y-2">
+            {people.map((item, key) => (
+              <View key={key}>
+                <PeopleCard />
+              </View>
+            ))}
           </View>
         </ScrollView>
       </SafeAreaView>
