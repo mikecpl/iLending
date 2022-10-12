@@ -16,8 +16,8 @@ const PeopleScreen = () => {
     <View className="flex-1">
       <Background />
       <SafeAreaView>
-        <ScrollView className="flex flex-col grow space-y-4 p-4 h-full">
-          <View className="flex flex-row justify-between items-center mb-4">
+        <ScrollView className="flex flex-col grow space-y-6 p-4 h-full">
+          <View className="flex flex-row justify-between items-center">
             <CustomText className="text-white dark:text-black text-2xl">
               People
             </CustomText>
@@ -26,7 +26,9 @@ const PeopleScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <SearchBar screenName="People" />
+          <View>
+            <SearchBar screenName="People" />
+          </View>
 
           <View className="flex flex-col space-y-2">
             {people.map((item, key) => (
