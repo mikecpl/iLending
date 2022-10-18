@@ -1,4 +1,4 @@
-import { Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import useAuth from '../hooks/useAuth';
 import { useEffect } from 'react';
@@ -9,8 +9,6 @@ import Constants from 'expo-constants';
 import CustomText from '../components/app/CustomText';
 import Background from '../components/app/Background';
 import Svg, { Path } from 'react-native-svg';
-import { BanknotesIcon } from 'react-native-heroicons/outline';
-import colors from 'tailwindcss/colors';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -32,7 +30,7 @@ const LoginScreen = () => {
       <Background />
       <SafeAreaView className="flex-1 flex-col items-center justify-evenly">
         <View className="flex flex-col items-center">
-          <BanknotesIcon size={54} color={colors.white} />
+          <Image source={require('../assets/ilending-trans-logo.png')} />
           <CustomText className="text-white text-4xl mt-8">
             iLending
           </CustomText>
