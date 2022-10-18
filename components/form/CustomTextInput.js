@@ -1,7 +1,6 @@
 import { View, TextInput } from 'react-native';
 import React from 'react';
 import colors from 'tailwindcss/colors';
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import CustomText from '../app/CustomText';
 
 const CustomTextInput = ({ title, icon, placeholder, helperText, errors = [] }) => {
@@ -26,7 +25,7 @@ const CustomTextInput = ({ title, icon, placeholder, helperText, errors = [] }) 
       <View className={rowClassNames}>
         {icon && (
           <View className="pl-1">
-            <MagnifyingGlassIcon color={colors.slate[400]} size={20} />
+            {icon}
           </View>
         )}
 
@@ -51,8 +50,8 @@ const CustomTextInput = ({ title, icon, placeholder, helperText, errors = [] }) 
 
       { hasError && (
         <View className="mt-2">
-          {errors.map(error => (
-            <CustomText className="text-red-500">
+          {errors.map((error, key) => (
+            <CustomText className="text-red-500" key={key}>
               {error}
             </CustomText>
           ))}
