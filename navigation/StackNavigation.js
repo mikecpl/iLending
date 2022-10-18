@@ -1,10 +1,10 @@
 import React from 'react';
 import LoginScreen from '../screens/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DashboardScreen from '../screens/DashboardScreen';
 import useAuth from '../hooks/useAuth';
 import TabNavigator from './TabNavigator';
 import PaymentModalScreen from '../screens/PaymentModalScreen';
+import PaymentFormModalScreen from '../screens/PaymentFormModal';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +31,7 @@ const StackNavigation = () => {
             presentation: "modal"
           }}>
             <Stack.Screen name="PaymentModal" component={PaymentModalScreen} />
+            <Stack.Screen name="PaymentFormModal" component={PaymentFormModalScreen} />
           </Stack.Group>
         </>
       )}

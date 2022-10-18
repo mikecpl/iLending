@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
 import { BellIcon } from 'react-native-heroicons/outline';
 import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
+import { TYPE_DEBT, TYPE_LOAN } from '../constants/payment';
 
 const DashboardScreen = () => {
   const { user } = useAuth();
@@ -64,7 +65,7 @@ const DashboardScreen = () => {
 
           <View className="flex flex-row justify-between rounded-xl space-x-4 mb-8">
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentModal')}
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_DEBT})}
             >
               <ArrowUpIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
@@ -72,7 +73,9 @@ const DashboardScreen = () => {
               </CustomText>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3">
+            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3"
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
+            >
               <ArrowDownIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
                 Loan
