@@ -7,20 +7,20 @@ const SearchBar = ({screenName}) => {
   // TODO reduxba betenni a keresés eredményét a screenName alapján
 
   return (
-    <View className="flex flex-row items-center space-x-2 bg-slate-700 px-2 py-1 rounded-lg">
-      <TouchableOpacity className="p-2">
+    <View className="flex flex-row items-center space-x-1 bg-slate-700 px-2 py-1 rounded-lg">
+      <TouchableOpacity className="p-1">
         <MagnifyingGlassIcon color={colors.slate[400]} size={20} />
       </TouchableOpacity>
 
-      <TextInput className="text-white grow h-10 text-lg pt-1 pb-2 mr-6" 
+      <TextInput className="text-white h-10 grow text-lg pt-1 pb-[10px] pr-6"
         multiline={true}
         blurOnSubmit={true}
         numberOfLines={1}
         placeholder="Search"
-        placeholderTextColor={colors.slate[400]} 
+        placeholderTextColor={colors.slate[400]}
       />
 
-      <TouchableOpacity className="p-2">
+      <TouchableOpacity className="p-1">
         <AdjustmentsHorizontalIcon color={colors.slate[400]} size={20} />
       </TouchableOpacity>
     </View>
