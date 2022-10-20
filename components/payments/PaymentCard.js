@@ -10,7 +10,7 @@ const PaymentCard = () => {
 
   return (
     <TouchableOpacity className="h-14 flex flex-row justify-between items-center space-x-2 mb-2"
-      onPress={() => navigation.navigate('PaymentModal')}
+      onPress={() => navigation.navigate('Payment', {payment: ''})}
     >
       <View className="bg-red-500 justify-center p-2 rounded-lg">
         <ArrowDownIcon color={colors.white} size={20} />

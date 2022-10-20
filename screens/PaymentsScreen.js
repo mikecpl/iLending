@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
 import SearchBar from '../components/app/SearchBar';
 
-const PaymentScreen = () => {
+const PaymentsScreen = () => {
   const navigation = useNavigation();
 
   return (
@@ -112,4 +112,4 @@ const PaymentScreen = () => {
   )
 }
 
-export default PaymentScreen;
+export default PaymentsScreen;

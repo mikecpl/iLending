@@ -3,8 +3,8 @@ import DashboardScreen from '../screens/DashboardScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import colors from 'tailwindcss/colors';
 import PeopleScreen from '../screens/PeopleScreen';
-import PaymentsScreen from '../screens/PaymentsScreen';
 import { HomeIcon, BanknotesIcon, UserGroupIcon, UserIcon } from 'react-native-heroicons/outline';
+import PaymentNavigation from './PaymentNavigation';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -28,10 +28,9 @@ const TabNavigator = () => {
           ),
         }} />
 
-      <Tab.Screen name="Payments"
-        component={PaymentsScreen}
+      <Tab.Screen name="PaymentsNavigation"
+        component={PaymentNavigation}
         options={{
-          tabBarLabel: 'Payments',
           tabBarIcon: ({ color, size }) => (
             <BanknotesIcon color={color} size={size} />
           )
