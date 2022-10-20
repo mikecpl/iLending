@@ -2,11 +2,13 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import CustomText from '../components/app/CustomText';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { MagnifyingGlassIcon, XMarkIcon } from 'react-native-heroicons/solid';
+import { XMarkIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import Background from '../components/app/Background';
 import { TYPE_DEBT } from '../constants/payment';
 import CustomTextInput from '../components/form/CustomTextInput';
+import { BanknotesIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, InboxStackIcon, PaperAirplaneIcon, UserIcon } from 'react-native-heroicons/outline';
+import CustomTextareaInput from '../components/form/CustomTextarea';
 
 const PaymentFormModalScreen = () => {
   const navigation = useNavigation();
@@ -31,20 +33,53 @@ const PaymentFormModalScreen = () => {
       <ScrollView className="flex flex-col space-y-6 p-4">
         <View className="flex flex-col space-y-4">
           <View>
-            <CustomTextInput 
-              title="Name" 
-              placeholder="Enter a name"
-              icon={<MagnifyingGlassIcon color={colors.slate[400]} size={20} />}
-              helperText="Max length is 255 character"
-              errors={['The field is required!', 'Enter a valid name!']}
+            <CustomTextInput
+              title="Item" 
+              placeholder="Enter an item"
+              icon={<InboxStackIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
             />
           </View>
           <View>
             <CustomTextInput
-              title="Item" 
-              placeholder="Enter an item"
+              title={type === TYPE_DEBT ? 'Debter' : 'Loaner'}
+              placeholder="Enter a name"
+              icon={<UserIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
             />
           </View>
+          <View>
+            <CustomTextInput
+              title="Amount" 
+              placeholder="Enter an amount"
+              icon={<BanknotesIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
+            />
+          </View>
+          <View>
+            <CustomTextInput
+              title="Expiration date" 
+              placeholder="Enter an expiration date"
+              icon={<CalendarDaysIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
+            />
+          </View>
+          <View>
+            <CustomTextareaInput
+              title="Note" 
+              placeholder="Enter a note"
+              icon={<ChatBubbleBottomCenterTextIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
+            />
+          </View>
+          <TouchableOpacity className="flex flex-row items-center justify-center bg-ilending-sky-600 rounded-lg p-2 space-x-2"
+            onPress={() => {}}
+          >
+            <PaperAirplaneIcon color={colors.white} size={22} />
+            <CustomText className="text-white text-lg">
+              Submit
+            </CustomText>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
