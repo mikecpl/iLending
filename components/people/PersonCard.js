@@ -5,12 +5,12 @@ import { UserIcon } from 'react-native-heroicons/outline';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 
-const PeopleCard = () => {
+const PersonCard = ({ item }) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity className="h-14 flex flex-row justify-between items-center space-x-2 mb-2"
-      onPress={() => navigation.navigate('PaymentModal')}
+      onPress={() => navigation.navigate('Person', { item })}
     >
       <View className="bg-slate-700 justify-center p-4 rounded-full">
         <UserIcon color={colors.white} size={20} />
@@ -35,4 +35,4 @@ const PeopleCard = () => {
   )
 }
 
-export default PeopleCard;
+export default PersonCard;

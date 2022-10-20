@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DashboardScreen from '../screens/DashboardScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import colors from 'tailwindcss/colors';
-import PeopleScreen from '../screens/PeopleScreen';
 import { HomeIcon, BanknotesIcon, UserGroupIcon, UserIcon } from 'react-native-heroicons/outline';
 import PaymentNavigation from './PaymentNavigation';
+import PersonNavigation from './PersonNavigation';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -36,10 +36,9 @@ const TabNavigator = () => {
           )
         }} />
 
-      <Tab.Screen name="People"
-        component={PeopleScreen}
+      <Tab.Screen name="PersonNavigation"
+        component={PersonNavigation}
         options={{
-          tabBarLabel: 'People',
           tabBarIcon: ({ color, size }) => (
             <UserGroupIcon color={color} size={size} />
           )

@@ -5,7 +5,7 @@ import { UserPlusIcon } from 'react-native-heroicons/outline';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
-import PeopleCard from '../components/people/PeopleCard';
+import PersonCard from '../components/people/PersonCard';
 import SearchBar from '../components/app/SearchBar';
 
 const PeopleScreen = () => {
@@ -33,7 +33,7 @@ const PeopleScreen = () => {
           <View className="flex flex-col space-y-2">
             {people.map((item, key) => (
               <View key={key}>
-                <PeopleCard />
+                <PersonCard />
               </View>
             ))}
           </View>
