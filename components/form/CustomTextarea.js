@@ -1,9 +1,10 @@
 import { View, TextInput } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import colors from 'tailwindcss/colors';
 import CustomText from '../app/CustomText';
 
-const CustomTextareaInput = ({ title, icon, placeholder, helperText, errors = [] }) => {
+const CustomTextareaInput = ({ defaultValue, title, icon, placeholder, helperText, errors = [], onChange }) => {
+  const [value, setValue] = useState(defaultValue);
   const hasError = errors.length > 0;
   let rowClassNames = 'flex flex-row space-x-1 bg-slate-700 px-2 py-1 rounded-lg';
   let titleClassNames = 'text-slate-400';
@@ -36,6 +37,12 @@ const CustomTextareaInput = ({ title, icon, placeholder, helperText, errors = []
             numberOfLines={10}
             placeholder={placeholder}
             placeholderTextColor={colors.slate[400]}
+            onChangeText={currentValue => {
+              setValue(currentValue);
+              onChange(currentValue);
+            }}
+            value={value}
+            style={{fontFamily: 'Raleway_600SemiBold'}}
           />
         </View>
       </View>

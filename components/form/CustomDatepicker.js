@@ -1,12 +1,11 @@
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import colors from 'tailwindcss/colors';
 import CustomText from '../app/CustomText';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const CustomDatepicker = ({ value = new Date(), mode = 'date', title, icon, helperText, errors = [] }) => {
+const CustomDatepicker = ({ defaultValue = new Date(), mode = 'date', title, icon, helperText, errors = [], onChange }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [date, setDate] = useState(value);
+  const [date, setDate] = useState(defaultValue);
   const hasError = errors.length > 0;
   let rowClassNames = 'flex flex-row items-center space-x-1 bg-slate-700 px-2 py-3 rounded-lg';
   let titleClassNames = 'text-slate-400';
@@ -47,6 +46,7 @@ const CustomDatepicker = ({ value = new Date(), mode = 'date', title, icon, help
         onConfirm={currentDate => {
           setDate(currentDate);
           setIsVisible(false);
+          onChange(currentDate);
         }}
         onCancel={() => {
           setIsVisible(false);
