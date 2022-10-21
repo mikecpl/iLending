@@ -15,7 +15,7 @@ const CustomTextareaInput = ({ title, icon, placeholder, helperText, errors = []
 
   return (
     <View>
-      {placeholder && (
+      {title && (
         <View className="mb-1">
           <CustomText className={titleClassNames}>
             {title}
