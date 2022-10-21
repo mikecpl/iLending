@@ -1,7 +1,7 @@
 import { View, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import colors from 'tailwindcss/colors';
-import CustomText from '../app/CustomText';
+import CustomText, { FONT_FAMILY_NORMAL } from '../app/CustomText';
 
 const CustomTextareaInput = ({ defaultValue, title, icon, placeholder, helperText, errors = [], onChange }) => {
   const [value, setValue] = useState(defaultValue);
@@ -42,7 +42,7 @@ const CustomTextareaInput = ({ defaultValue, title, icon, placeholder, helperTex
               onChange(currentValue);
             }}
             value={value}
-            style={{fontFamily: 'Raleway_600SemiBold'}}
+            style={{fontFamily: FONT_FAMILY_NORMAL}}
           />
         </View>
       </View>

@@ -2,6 +2,7 @@ import { View, TouchableOpacity, TextInput } from 'react-native';
 import React from 'react';
 import colors from 'tailwindcss/colors';
 import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { FONT_FAMILY_NORMAL } from './CustomText';
 
 const SearchBar = ({screenName}) => {
   // TODO reduxba betenni a keresés eredményét a screenName alapján
@@ -18,6 +19,7 @@ const SearchBar = ({screenName}) => {
         numberOfLines={1}
         placeholder="Search"
         placeholderTextColor={colors.slate[400]}
+        style={{fontFamily: FONT_FAMILY_NORMAL}}
       />
 
       <TouchableOpacity className="p-1">
