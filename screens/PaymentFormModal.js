@@ -9,6 +9,7 @@ import { TYPE_DEBT } from '../constants/payment';
 import CustomTextInput from '../components/form/CustomTextInput';
 import { BanknotesIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, InboxStackIcon, PaperAirplaneIcon, UserIcon } from 'react-native-heroicons/outline';
 import CustomTextareaInput from '../components/form/CustomTextarea';
+import CustomDatepicker from '../components/form/CustomDatepicker';
 
 const PaymentFormModalScreen = () => {
   const navigation = useNavigation();
@@ -57,7 +58,7 @@ const PaymentFormModalScreen = () => {
             />
           </View>
           <View>
-            <CustomTextInput
+            <CustomDatepicker
               title="Expiration date" 
               placeholder="Enter an expiration date"
               icon={<CalendarDaysIcon color={colors.slate[400]} size={20} />}
