@@ -1,9 +1,15 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import colors from '../../etc/colors';
+import Background from './Background';
 
 const Loader = () => {
-  return <ActivityIndicator className="flex-1" color={colors['ilending-sky'][600]} />;
+  return (
+    <View className="flex-1">
+      <Background />
+      <ActivityIndicator className="flex-1" color={colors.white} />
+    </View>
+  );
 }
 
 export default Loader;
