@@ -10,8 +10,12 @@ import CustomTextInput from '../components/form/CustomTextInput';
 import { BanknotesIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, InboxStackIcon, PaperAirplaneIcon, UserIcon } from 'react-native-heroicons/outline';
 import CustomTextareaInput from '../components/form/CustomTextarea';
 import CustomDatepicker from '../components/form/CustomDatepicker';
+import useForm from '../hooks/useForm';
 
 const PaymentFormModalScreen = () => {
+  const {formValues, setFormValue, submit, getError} = useForm({
+    expiresAt: new Date()
+  });
   const navigation = useNavigation();
   const route = useRoute();
   const { type, payment } = route.params;
@@ -39,6 +43,7 @@ const PaymentFormModalScreen = () => {
               placeholder="Enter an item"
               icon={<InboxStackIcon color={colors.slate[400]} size={20} />}
               errors={[]}
+              onChange={value => setFormValue('item', value)}
             />
           </View>
           <View>
@@ -47,6 +52,7 @@ const PaymentFormModalScreen = () => {
               placeholder="Enter a name"
               icon={<UserIcon color={colors.slate[400]} size={20} />}
               errors={[]}
+              onChange={value => setFormValue('person', value)}
             />
           </View>
           <View>
@@ -55,6 +61,7 @@ const PaymentFormModalScreen = () => {
               placeholder="Enter an amount"
               icon={<BanknotesIcon color={colors.slate[400]} size={20} />}
               errors={[]}
+              onChange={value => setFormValue('amount', value)}
             />
           </View>
           <View>
@@ -63,6 +70,7 @@ const PaymentFormModalScreen = () => {
               placeholder="Enter an expiration date"
               icon={<CalendarDaysIcon color={colors.slate[400]} size={20} />}
               errors={[]}
+              onChange={value => setFormValue('expiresAt', value)}
             />
           </View>
           <View>
@@ -71,10 +79,11 @@ const PaymentFormModalScreen = () => {
               placeholder="Enter a note"
               icon={<ChatBubbleBottomCenterTextIcon color={colors.slate[400]} size={20} />}
               errors={[]}
+              onChange={value => setFormValue('note', value)}
             />
           </View>
           <TouchableOpacity className="flex flex-row items-center justify-center bg-ilending-sky-600 rounded-lg p-2 space-x-2"
-            onPress={() => {}}
+            onPress={() => submit()}
           >
             <PaperAirplaneIcon color={colors.white} size={22} />
             <CustomText className="text-white text-lg">
