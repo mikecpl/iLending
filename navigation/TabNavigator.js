@@ -33,7 +33,8 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <BanknotesIcon color={color} size={size} />
-          )
+          ),
+          lazy: false
         }} />
 
       <Tab.Screen name="PersonNavigation"
@@ -41,7 +42,8 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <UserGroupIcon color={color} size={size} />
-          )
+          ),
+          lazy: false
         }} />
 
       <Tab.Screen name="Profile"
