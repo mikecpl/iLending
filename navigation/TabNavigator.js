@@ -28,7 +28,7 @@ const TabNavigator = () => {
           ),
         }} />
 
-      <Tab.Screen name="PaymentsNavigation"
+      <Tab.Screen name="PaymentNavigation"
         component={PaymentNavigation}
         options={{
           tabBarIcon: ({ color, size }) => (
