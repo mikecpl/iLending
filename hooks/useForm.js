@@ -23,15 +23,21 @@ const useForm = (defaultValues = {}) => {
     return errors[id];
   }
 
-  const submit = () => {
+  const submitForm = () => {
     console.log(formValues);
+    resetForm();
+  }
+
+  const resetForm = () => {
+    setFormValues(defaultValues);
   }
 
   return useMemo(() => ({
     formValues,
     errors,
     setFormValue,
-    submit,
+    submitForm,
+    resetForm,
     hasError,
     getError
   }), [formValues, errors]);

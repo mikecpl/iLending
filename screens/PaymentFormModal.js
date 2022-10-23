@@ -13,7 +13,7 @@ import CustomDatepicker from '../components/form/CustomDatepicker';
 import useForm from '../hooks/useForm';
 
 const PaymentFormModalScreen = () => {
-  const {formValues, setFormValue, submit, getError} = useForm({
+  const {formValues, setFormValue, submitForm, getError} = useForm({
     expiresAt: new Date()
   });
   const navigation = useNavigation();
@@ -44,6 +44,7 @@ const PaymentFormModalScreen = () => {
               icon={<InboxStackIcon color={colors.slate[400]} size={20} />}
               errors={[]}
               onChange={value => setFormValue('item', value)}
+              value={formValues['item']}
             />
           </View>
           <View>
@@ -53,6 +54,7 @@ const PaymentFormModalScreen = () => {
               icon={<UserIcon color={colors.slate[400]} size={20} />}
               errors={[]}
               onChange={value => setFormValue('person', value)}
+              value={formValues['person']}
             />
           </View>
           <View>
@@ -62,6 +64,7 @@ const PaymentFormModalScreen = () => {
               icon={<BanknotesIcon color={colors.slate[400]} size={20} />}
               errors={[]}
               onChange={value => setFormValue('amount', value)}
+              value={formValues['amount']}
             />
           </View>
           <View>
@@ -71,6 +74,7 @@ const PaymentFormModalScreen = () => {
               icon={<CalendarDaysIcon color={colors.slate[400]} size={20} />}
               errors={[]}
               onChange={value => setFormValue('expiresAt', value)}
+              value={formValues['expiresAt']}
             />
           </View>
           <View>
@@ -80,10 +84,11 @@ const PaymentFormModalScreen = () => {
               icon={<ChatBubbleBottomCenterTextIcon color={colors.slate[400]} size={20} />}
               errors={[]}
               onChange={value => setFormValue('note', value)}
+              value={formValues['note']}
             />
           </View>
           <TouchableOpacity className="flex flex-row items-center justify-center bg-ilending-sky-600 rounded-lg p-2 space-x-2"
-            onPress={() => submit()}
+            onPress={() => submitForm()}
           >
             <PaperAirplaneIcon color={colors.white} size={22} />
             <CustomText className="text-white text-lg">

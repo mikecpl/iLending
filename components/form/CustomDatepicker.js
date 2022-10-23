@@ -3,9 +3,8 @@ import React, { useState } from 'react';
 import CustomText from '../app/CustomText';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const CustomDatepicker = ({ defaultValue = new Date(), mode = 'date', title, icon, helperText, errors = [], onChange }) => {
+const CustomDatepicker = ({ value = new Date(), mode = 'date', title, icon, helperText, errors = [], onChange }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [date, setDate] = useState(defaultValue);
   const hasError = errors.length > 0;
   let rowClassNames = 'flex flex-row items-center space-x-1 bg-slate-700 px-2 py-3 rounded-lg';
   let titleClassNames = 'text-slate-400';
@@ -34,7 +33,7 @@ const CustomDatepicker = ({ defaultValue = new Date(), mode = 'date', title, ico
         )}
         <View className="px-1 pt-1 grow text-left">
           <CustomText className="text-white text-base">
-            {date.toLocaleDateString()}
+            {value.toLocaleDateString()}
           </CustomText>
         </View>
       </TouchableOpacity>
@@ -42,9 +41,8 @@ const CustomDatepicker = ({ defaultValue = new Date(), mode = 'date', title, ico
       <DateTimePickerModal
         isVisible={isVisible}
         mode={mode}
-        date={date}
+        date={value}
         onConfirm={currentDate => {
-          setDate(currentDate);
           setIsVisible(false);
           onChange(currentDate);
         }}

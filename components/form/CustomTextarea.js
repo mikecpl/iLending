@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import colors from 'tailwindcss/colors';
 import CustomText, { FONT_FAMILY_NORMAL } from '../app/CustomText';
 
-const CustomTextareaInput = ({ defaultValue, title, icon, placeholder, helperText, errors = [], onChange }) => {
-  const [value, setValue] = useState(defaultValue);
+const CustomTextareaInput = ({ value, title, icon, placeholder, helperText, errors = [], onChange }) => {
   const hasError = errors.length > 0;
   let rowClassNames = 'flex flex-row space-x-1 bg-slate-700 px-2 py-1 rounded-lg';
   let titleClassNames = 'text-slate-400';
@@ -38,7 +37,6 @@ const CustomTextareaInput = ({ defaultValue, title, icon, placeholder, helperTex
             placeholder={placeholder}
             placeholderTextColor={colors.slate[400]}
             onChangeText={currentValue => {
-              setValue(currentValue);
               onChange(currentValue);
             }}
             value={value}

@@ -1,10 +1,9 @@
 import { View, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import colors from 'tailwindcss/colors';
 import CustomText, { FONT_FAMILY_NORMAL } from '../app/CustomText';
 
-const CustomTextInput = ({ defaultValue, title, icon, placeholder, helperText, errors = [], onChange }) => {
-  const [value, setValue] = useState(defaultValue);
+const CustomTextInput = ({ value, title, icon, placeholder, helperText, errors = [], onChange }) => {
   const hasError = errors.length > 0;
   let rowClassNames = 'flex flex-row items-center space-x-1 bg-slate-700 px-2 py-1 rounded-lg';
   let titleClassNames = 'text-slate-400';
@@ -38,7 +37,6 @@ const CustomTextInput = ({ defaultValue, title, icon, placeholder, helperText, e
             placeholder={placeholder}
             placeholderTextColor={colors.slate[400]}
             onChangeText={currentValue => {
-              setValue(currentValue);
               onChange(currentValue);
             }}
             value={value}
