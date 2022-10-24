@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence, getAuth } from 'firebase/auth/react-native';
-import { getFirestore } from 'firebase/firestore';
+import { collection, getFirestore } from 'firebase/firestore';
 
 // TODO Google hashprints
 
@@ -29,4 +29,17 @@ const auth = !isAppInitalized
 
 const db = getFirestore();
 
-export { auth, db };
+const transformData = doc => {
+  return {
+    id: doc.id,
+    ...doc.data()
+  }
+};
+
+const transformCollection = docs => {
+  return docs.map(doc => transformData(doc));
+};
+
+const paymentsCollection = collection(db, 'payments');
+
+export { auth, db, transformData, transformCollection, paymentsCollection };
