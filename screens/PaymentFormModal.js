@@ -2,23 +2,49 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import CustomText from '../components/app/CustomText';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { XMarkIcon } from 'react-native-heroicons/solid';
+import { AtSymbolIcon, XMarkIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import Background from '../components/app/Background';
-import { TYPE_DEBT } from '../constants/payment';
+import { STATUS_PENDING, TYPE_DEBT } from '../constants/payment';
 import CustomTextInput from '../components/form/CustomTextInput';
 import { BanknotesIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, InboxStackIcon, PaperAirplaneIcon, UserIcon } from 'react-native-heroicons/outline';
 import CustomTextareaInput from '../components/form/CustomTextarea';
 import CustomDatepicker from '../components/form/CustomDatepicker';
 import useForm from '../hooks/useForm';
+import { addDoc, collection, serverTimestamp, setDoc, Timestamp } from 'firebase/firestore'; 
+import { db } from '../firebase';
+import useAuth from '../hooks/useAuth';
 
 const PaymentFormModalScreen = () => {
-  const {formValues, setFormValue, submitForm, getError} = useForm({
-    expiresAt: new Date()
+  const route = useRoute();
+  const { user } = useAuth();
+  const { type, payment } = route.params;
+  const { formValues, setFormValue, submitForm, getError } = useForm({
+    occuredAt: new Date()
   });
   const navigation = useNavigation();
-  const route = useRoute();
-  const { type, payment } = route.params;
+  const submit = async () => {
+    // TODO submitForm-ba betenni success és error handlinggel
+    // TODO rules-t beállítani firebase-ben
+
+    await addDoc(collection(db, 'payments'), {
+      item: formValues.item,
+      type,
+      amount: formValues.amount,
+      currency: 'HUF', // TODO
+      userId: user.uid,
+      personId: 0, // TODO
+      personName: formValues.personName,
+      personEmail: formValues.personEmail ?? null,
+      status: STATUS_PENDING,
+      note: formValues.note ?? null,
+      occuredAt: Timestamp.fromDate(formValues.occuredAt),
+      expiresAt: formValues.expiresAt
+        ? Timestamp.fromDate(formValues.expiresAt)
+        : null,
+      createdAt: serverTimestamp()
+    });
+  };
 
   return (
     <View className="flex-1">
@@ -49,12 +75,23 @@ const PaymentFormModalScreen = () => {
           </View>
           <View>
             <CustomTextInput
-              title={type === TYPE_DEBT ? 'Debter' : 'Loaner'}
+              title={type === TYPE_DEBT ? 'Debter\'s name' : 'Loaner\'s name'}
               placeholder="Enter a name"
               icon={<UserIcon color={colors.slate[400]} size={20} />}
               errors={[]}
-              onChange={value => setFormValue('person', value)}
-              value={formValues['person']}
+              onChange={value => setFormValue('personName', value)}
+              value={formValues['personName']}
+            />
+          </View>
+          <View>
+            <CustomTextInput
+              title={type === TYPE_DEBT ? 'Debter\'s email address' : 'Loaner\'s email address'}
+              placeholder="Enter an email address"
+              helperText="Fill this field if you want to send notification"
+              icon={<AtSymbolIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
+              onChange={value => setFormValue('personEmail', value)}
+              value={formValues['personEmail']}
             />
           </View>
           <View>
@@ -69,8 +106,18 @@ const PaymentFormModalScreen = () => {
           </View>
           <View>
             <CustomDatepicker
+              title={type === TYPE_DEBT ? 'Debit date' : 'Loan date'}
+              placeholder="Enter a date"
+              icon={<CalendarDaysIcon color={colors.slate[400]} size={20} />}
+              errors={[]}
+              onChange={value => setFormValue('occuredAt', value)}
+              value={formValues['occuredAt']}
+            />
+          </View>
+          <View>
+            <CustomDatepicker
               title="Expiration date" 
-              placeholder="Enter an expiration date"
+              placeholder="Enter a date"
               icon={<CalendarDaysIcon color={colors.slate[400]} size={20} />}
               errors={[]}
               onChange={value => setFormValue('expiresAt', value)}
@@ -87,9 +134,11 @@ const PaymentFormModalScreen = () => {
               value={formValues['note']}
             />
           </View>
-          <TouchableOpacity className="flex flex-row items-center justify-center bg-ilending-sky-600 rounded-lg p-2 space-x-2"
-            onPress={() => submitForm()}
-          >
+          <TouchableOpacity className="flex flex-row items-center justify-center bg-ilending-sky-600 rounded-lg p-2 space-x-2 mb-16"
+            onPress={() => {
+              submit();
+              navigation.goBack();
+            }}>
             <PaperAirplaneIcon color={colors.white} size={22} />
             <CustomText className="text-white text-lg">
               Submit
