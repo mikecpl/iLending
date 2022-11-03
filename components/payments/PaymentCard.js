@@ -4,9 +4,21 @@ import CustomText from '../app/CustomText';
 import { ArrowDownIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
+import { TYPE_DEBT } from '../../constants/payment';
 
-const PaymentCard = () => {
+const PaymentCard = ({payment}) => {
   const navigation = useNavigation();
+  
+  // TODO remove
+  if (!payment) {
+    payment = {
+      item: 'Auchan',
+      type: 'debt',
+      amount: 2000
+    }
+  }
+
+  const amount = `${payment.amount}Ft`;
 
   return (
     <TouchableOpacity className="h-14 flex flex-row justify-between items-center space-x-2 mb-2"
@@ -20,13 +32,22 @@ const PaymentCard = () => {
           Somogyi Gergő
         </CustomText>
         <CustomText className="text-slate-500">
-          SPAR bevásárlás
+          {payment.item}
         </CustomText>
       </View>
-      <View className="flex flex-row items-center justify-end">
-        <CustomText className="text-red-500 mr-2">
-          - $300
-        </CustomText>
+      <View className="flex flex-row items-center justify-end mr-2">
+        {payment.type === TYPE_DEBT 
+          ? ( 
+            <CustomText className="text-red-500">
+              -{amount}
+            </CustomText>
+          )
+          : (
+            <CustomText className="text-ilending-sky-600">
+              {amount}
+            </CustomText>
+          )
+        }
       </View>
     </TouchableOpacity>
   )
