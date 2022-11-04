@@ -9,7 +9,7 @@ import SearchBar from '../components/app/SearchBar';
 import { onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { paymentsCollection, transformCollection } from '../firebase';
 import useAuth from '../hooks/useAuth';
-import { STATUS_PENDING, TYPE_DEBT } from '../constants/payment';
+import { STATUS_PENDING, TYPE_DEBT, TYPE_LOAN } from '../constants/payment';
 import { FaceFrownIcon } from 'react-native-heroicons/outline';
 import PaymentGroup from '../components/payments/PaymentGroup';
 
@@ -48,18 +48,20 @@ const PaymentsScreen = () => {
 
           <View className="flex flex-row justify-between rounded-xl space-x-4 mb-4">
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentModal')}
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
             >
               <ArrowUpIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
-                Debt
+                Loan
               </CustomText>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3">
+            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3"
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_DEBT})}
+            >
               <ArrowDownIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
-                Loan
+                Debt
               </CustomText>
             </TouchableOpacity>
           </View>

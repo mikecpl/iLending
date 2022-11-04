@@ -65,20 +65,20 @@ const DashboardScreen = () => {
 
           <View className="flex flex-row justify-between rounded-xl space-x-4 mb-8">
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_DEBT})}
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
             >
               <ArrowUpIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
-                Debt
+                Loan
               </CustomText>
             </TouchableOpacity>
 
             <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_DEBT})}
             >
               <ArrowDownIcon color={colors.white} size={20} />
               <CustomText className="text-lg text-white">
-                Loan
+                Debt
               </CustomText>
             </TouchableOpacity>
           </View>
