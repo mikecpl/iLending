@@ -1,4 +1,4 @@
-import { SafeAreaView, TouchableOpacity, View, ScrollView, RefreshControl } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import CustomText from '../components/app/CustomText';
 import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
@@ -6,7 +6,7 @@ import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
 import SearchBar from '../components/app/SearchBar';
-import { getDocs, orderBy, query, where } from 'firebase/firestore';
+import { onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { paymentsCollection, transformCollection } from '../firebase';
 import useAuth from '../hooks/useAuth';
 import { STATUS_PENDING, TYPE_DEBT } from '../constants/payment';
@@ -16,7 +16,6 @@ import PaymentGroup from '../components/payments/PaymentGroup';
 const PaymentsScreen = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
-  const [refreshing, setRefreshing] = useState(true);
   const [payments, setPayments] = useState([]);
   const [pendingPayments, setPendingPayments] = useState([]);
 
@@ -24,37 +23,23 @@ const PaymentsScreen = () => {
   // TODO payments hónap szerinti megjelenítése
 
   useEffect(() => {
-    if (!refreshing) return;
-
     const q = query(paymentsCollection, where('userId', '==', user.uid), orderBy('createdAt', 'desc'));
 
-    return;
-
-    getDocs(q).then(snapshot => {
+    const unsubscribe = onSnapshot(q, snapshot => {
       const docs = transformCollection(snapshot.docs);
-      //console.log(docs[0].createdAt.toDate());
 
       setPayments(docs.filter(item => item.status !== STATUS_PENDING));
       setPendingPayments(docs.filter(item => item.status === STATUS_PENDING));
-      console.log(docs[0]);
-    })
-    .catch(error => console.log(error))
-    .finally(() => setRefreshing(false));
-  }, [refreshing]);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <View className="flex-1">
       <Background />
       <SafeAreaView>
-        <ScrollView 
-          className="flex flex-col grow space-y-2 p-4 h-full"
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              tintColor={colors.white}
-              onRefresh={() => setRefreshing(true)}
-            />
-          }>
+        <ScrollView className="flex flex-col grow space-y-2 p-4 h-full">
           <View className="mb-4">
             <CustomText className="text-white dark:text-black text-2xl">
               Payments
