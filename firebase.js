@@ -41,5 +41,13 @@ const transformCollection = docs => {
 };
 
 const paymentsCollection = collection(db, 'payments');
+const usersCollection = collection(db, 'users');
 
-export { auth, db, transformData, transformCollection, paymentsCollection };
+export { 
+  auth, 
+  db, 
+  transformData, 
+  transformCollection, 
+  paymentsCollection, 
+  usersCollection 
+};

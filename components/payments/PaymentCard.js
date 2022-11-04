@@ -1,13 +1,25 @@
 import { View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomText from '../app/CustomText';
 import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 import { TYPE_DEBT } from '../../constants/payment';
+import { doc, getDoc } from 'firebase/firestore';
+import { db, transformData } from '../../firebase';
 
-const PaymentCard = ({payment}) => {
+const PaymentCard = ({ payment }) => {
   const navigation = useNavigation();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const docRef = doc(db, 'users', payment.userId);
+
+    getDoc(docRef).then(snapshot => {
+      setUser(transformData(snapshot));
+    }).catch(e => console.log(e));
+  }, []);
+  
   
   // TODO remove
   if (!payment) {
@@ -38,7 +50,7 @@ const PaymentCard = ({payment}) => {
       }
       <View className="flex flex-col grow justify-between pl-2 pr-4">
         <CustomText className="w-32 text-white text-base">
-          Somogyi Gergő
+          {user.name}
         </CustomText>
         <CustomText className="text-slate-500">
           {payment.item}
