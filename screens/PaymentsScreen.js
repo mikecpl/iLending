@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import CustomText from '../components/app/CustomText';
 import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
 import colors from 'tailwindcss/colors';
-import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
 import SearchBar from '../components/app/SearchBar';
@@ -12,6 +11,7 @@ import { paymentsCollection, transformCollection } from '../firebase';
 import useAuth from '../hooks/useAuth';
 import { STATUS_PENDING, TYPE_DEBT } from '../constants/payment';
 import { FaceFrownIcon } from 'react-native-heroicons/outline';
+import PaymentGroup from '../components/payments/PaymentGroup';
 
 const PaymentsScreen = () => {
   const navigation = useNavigation();
@@ -19,7 +19,6 @@ const PaymentsScreen = () => {
   const [refreshing, setRefreshing] = useState(true);
   const [payments, setPayments] = useState([]);
   const [pendingPayments, setPendingPayments] = useState([]);
-  const [pendingPaymentsTotal, setPendingPaymentsTotal] = useState(0);
 
   // TODO user adatainak lekérése
   // TODO payments hónap szerinti megjelenítése
@@ -42,18 +41,6 @@ const PaymentsScreen = () => {
     .catch(error => console.log(error))
     .finally(() => setRefreshing(false));
   }, [refreshing]);
-
-  useEffect(() => {
-    setPendingPaymentsTotal(pendingPayments.reduce((sum, payment) => {
-      const amount = parseInt(payment.amount);
-
-      if (payment.type === TYPE_DEBT) {
-        return sum - amount;
-      }
-
-      return sum + amount;
-    }, 0));
-  }, [pendingPayments]);
 
   return (
     <View className="flex-1">
@@ -107,68 +94,15 @@ const PaymentsScreen = () => {
 
           {pendingPayments.length > 0 &&
             <View>
-              <View className="flex flex-row justify-between items-center">
-                <CustomText className="text-white text-lg">
-                  Pending payments
-                </CustomText>
-                <TouchableOpacity className="p-2">
-                  <CustomText className={"text-lg " + (pendingPaymentsTotal < 0 ? "text-red-500" : "text-white")}>
-                    {pendingPaymentsTotal}Ft
-                  </CustomText>
-                </TouchableOpacity>
-              </View>
-
-              <View className="flex flex-col">
-                {pendingPayments.map(pendingPayment => (
-                  <PaymentCard key={pendingPayment.id} payment={pendingPayment} />
-                ))}
-              </View>
+              <PaymentGroup title="Pending payments" payments={pendingPayments} />
             </View>
           }
 
-          <View>
-            <View className="flex flex-row justify-between items-center">
-              <CustomText className="text-white text-lg">
-                2022 October
-              </CustomText>
-              <TouchableOpacity className="p-2">
-                <CustomText className="text-red-500 text-lg">
-                  - $2 100
-                </CustomText>
-              </TouchableOpacity>
+          {payments.length > 0 &&
+            <View>
+              <PaymentGroup title="2022 October" payments={payments} />
             </View>
-
-            <View className="flex flex-col">
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-            </View>
-          </View>
-
-          <View className="mb-4">
-            <View className="flex flex-row justify-between items-center">
-              <CustomText className="text-white text-lg">
-                2022 September
-              </CustomText>
-              <TouchableOpacity className="p-2">
-                <CustomText className="text-red-500 text-lg">
-                  - $1 500
-                </CustomText>
-              </TouchableOpacity>
-            </View>
-
-            <View className="flex flex-col">
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
-            </View>
-          </View>
+          }
         </ScrollView>
       </SafeAreaView>
     </View>
