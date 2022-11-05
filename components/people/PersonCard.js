@@ -9,13 +9,13 @@ const PersonCard = ({ item }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity className="h-14 flex flex-row justify-between items-center space-x-2 mb-2"
+    <TouchableOpacity className="min-h-[48px] h-fit flex flex-row justify-between items-center space-x-2 mb-2"
       onPress={() => navigation.navigate('Person', { item })}
     >
       <View className="bg-slate-700 justify-center p-4 rounded-full">
         <UserIcon color={colors.white} size={20} />
       </View>
-      <View className="flex flex-col grow justify-between pl-2 pr-4">
+      <View className="flex flex-col w-2/3 grow justify-between pl-2 pr-4">
         <CustomText className="w-32 text-white text-base">
           Somogyi Gergő
         </CustomText>
