@@ -1,14 +1,9 @@
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import CustomText from '../app/CustomText';
-import { ArrowDownIcon } from 'react-native-heroicons/solid';
-import colors from 'tailwindcss/colors';
-import { useNavigation } from '@react-navigation/native';
 import { TYPE_DEBT } from '../../constants/payment';
-import PaymentCard from './PaymentCard';
 
-const PaymentGroup = ({title, payments}) => {
-  const navigation = useNavigation();
+const PaymentGroupTitle = ({title, payments}) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -33,14 +28,8 @@ const PaymentGroup = ({title, payments}) => {
           {total}Ft
         </CustomText>
       </View>
-
-      <View className="flex flex-col">
-        {payments.map(payment => (
-          <PaymentCard key={payment.id} payment={payment} />
-        ))}
-      </View>
     </View>
   )
 }
 
-export default PaymentGroup;
+export default PaymentGroupTitle;

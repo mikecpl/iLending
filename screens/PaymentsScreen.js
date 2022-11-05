@@ -1,4 +1,4 @@
-import { SafeAreaView, TouchableOpacity, View, ScrollView } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, SectionList, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import CustomText from '../components/app/CustomText';
 import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
@@ -6,40 +6,114 @@ import colors from 'tailwindcss/colors';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
 import SearchBar from '../components/app/SearchBar';
-import { onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore';
 import { paymentsCollection, transformCollection } from '../firebase';
 import useAuth from '../hooks/useAuth';
-import { STATUS_PENDING, TYPE_DEBT, TYPE_LOAN } from '../constants/payment';
+import { STATUS_COMPLETED, STATUS_DENIED, STATUS_PENDING, TYPE_DEBT, TYPE_LOAN } from '../constants/payment';
 import { FaceFrownIcon } from 'react-native-heroicons/outline';
-import PaymentGroup from '../components/payments/PaymentGroup';
+import PaymentGroupTitle from '../components/payments/PaymentGroupTitle';
+import PaymentCard from '../components/payments/PaymentCard';
+import { errorToast } from '../components/app/toast';
+
+const LIMIT = 10;
 
 const PaymentsScreen = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
   const [payments, setPayments] = useState([]);
   const [pendingPayments, setPendingPayments] = useState([]);
+  const [lastDoc, setLastDoc] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAllDataFetched, setIsAllDataFetched] = useState(false);
+  const data = [
+    {
+      title: 'Pending payments',
+      data: pendingPayments
+    },
+    {
+      title: 'Payments',
+      data: payments
+    }
+  ];
 
   // TODO user adatainak lekérése
   // TODO payments hónap szerinti megjelenítése
+  // TODO aggregált total count https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
+
+  const fetchPendingPayments = () => {
+    const q = query(
+      paymentsCollection, 
+      where('userId', '==', user.uid),
+      where('status', '==', STATUS_PENDING),
+      orderBy('createdAt', 'desc'),
+    );
+
+    getDocs(q).then(snapshot => {
+      if (snapshot.docs.length === 0) return;
+
+      setPendingPayments(transformCollection(snapshot.docs));
+    }).catch(() => errorToast());
+  };
 
   useEffect(() => {
-    const q = query(paymentsCollection, where('userId', '==', user.uid), orderBy('createdAt', 'desc'));
-
-    const unsubscribe = onSnapshot(q, snapshot => {
-      const docs = transformCollection(snapshot.docs);
-
-      setPayments(docs.filter(item => item.status !== STATUS_PENDING));
-      setPendingPayments(docs.filter(item => item.status === STATUS_PENDING));
-    });
-
-    return () => unsubscribe();
+    fetchPendingPayments();
   }, []);
+  
+  const fetchPayments = () => {
+    if (isAllDataFetched || isLoading) return;
+
+    setIsLoading(true);
+
+    let q = query(
+      paymentsCollection, 
+      where('userId', '==', user.uid),
+      where('status', 'in', [STATUS_COMPLETED, STATUS_DENIED]),
+      orderBy('createdAt', 'desc'),
+      limit(LIMIT)
+    );
+
+    if (lastDoc) {
+      q = query(
+        paymentsCollection, 
+        where('userId', '==', user.uid),
+        where('status', 'in', [STATUS_COMPLETED, STATUS_DENIED]),
+        orderBy('createdAt', 'desc'),
+        startAfter(lastDoc),
+        limit(LIMIT)
+      );
+    }
+
+    getDocs(q).then(snapshot => {
+      if (snapshot.docs.length === 0) {
+        setIsAllDataFetched(true);
+      }
+
+      const docs = transformCollection(snapshot.docs);
+      setLastDoc(snapshot.docs[snapshot.docs.length-1]);
+
+      // TODO
+      // setPayments(prevState => {
+      //   docs.forEach(doc => {
+      //     if (doc.status === STATUS_PENDING) {
+      //       prevState
+  
+      //       return;
+      //     }
+      //   });
+      // });
+
+      setPayments(prevState => {
+        return prevState.concat(docs);
+      });
+    }).catch((e) => console.log(e))
+    .finally(() => setIsLoading(false));
+  };
 
   return (
     <View className="flex-1">
       <Background />
       <SafeAreaView>
-        <ScrollView className="flex flex-col grow space-y-2 p-4 h-full">
+        <View className="flex flex-col grow space-y-2 p-4 h-full">
           <View className="mb-4">
             <CustomText className="text-white dark:text-black text-2xl">
               Payments
@@ -70,27 +144,33 @@ const PaymentsScreen = () => {
             <SearchBar screenName="Payments" />
           </View>
 
-          {pendingPayments.length === 0 && payments.length === 0 && 
-            <View className="flex flex-col space-y-4 items-center">
-              <FaceFrownIcon color={colors.white} size={64} />
-              <CustomText className="text-white text-base">
-                There are no added payments yet
-              </CustomText>
-            </View>
-          }
+          <SectionList
+            sections={data}
+            keyExtractor={(item, index) => index}
+            stickySectionHeadersEnabled={false}
+            renderItem={({ item }) => <PaymentCard payment={item} />}
+            renderSectionHeader={({ section: { title, data } }) => (
+              <View className="mt-4 mb-2">
+                <PaymentGroupTitle title={title} payments={data} />
+              </View>
+            )}
+            ListEmptyComponent={() => (
+              <View className="flex flex-col space-y-4 items-center">
+                <FaceFrownIcon color={colors.white} size={64} />
+                <CustomText className="text-white text-base">
+                  There are no added payments yet
+                </CustomText>
+              </View>
+            )}
+            onEndReached={() => fetchPayments()}
+          />
 
-          {pendingPayments.length > 0 &&
+          {isLoading &&
             <View>
-              <PaymentGroup title="Pending payments" payments={pendingPayments} />
+              <ActivityIndicator />
             </View>
           }
-
-          {payments.length > 0 &&
-            <View>
-              <PaymentGroup title="2022 October" payments={payments} />
-            </View>
-          }
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </View>
   )
