@@ -10,7 +10,7 @@ import { getDocs, limit, orderBy, query, startAfter, where } from 'firebase/fire
 import { paymentsCollection, transformCollection } from '../firebase';
 import useAuth from '../hooks/useAuth';
 import { STATUS_COMPLETED, STATUS_DENIED, STATUS_PENDING, TYPE_DEBT, TYPE_LOAN } from '../constants/payment';
-import { FaceFrownIcon } from 'react-native-heroicons/outline';
+import { FaceFrownIcon, PlusCircleIcon, PlusIcon } from 'react-native-heroicons/outline';
 import PaymentGroupTitle from '../components/payments/PaymentGroupTitle';
 import PaymentCard from '../components/payments/PaymentCard';
 import { errorToast } from '../components/app/toast';
@@ -39,6 +39,8 @@ const PaymentsScreen = () => {
   // TODO user adatainak lekérése
   // TODO payments hónap szerinti megjelenítése
   // TODO aggregált total count https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
+  // TODO átvariálni, hogy lekérni az összes adatot? utánajárni, hogy firestore-ban (nosql-ben) ez mennyire költséges
+  // TODO átvariálni, hogy kevesebb dolgot kérjen be (elején még nem lesz határidő pl., viszont ki lehessen választani, hogy ki fizetett, ha van user megadva, tehát fel lehet vinni sima vásárlást is, ami nem tartozás másnak)
 
   const fetchPendingPayments = () => {
     const q = query(
@@ -114,33 +116,19 @@ const PaymentsScreen = () => {
       <Background />
       <SafeAreaView>
         <View className="flex flex-col grow space-y-2 p-4 h-full">
-          <View className="mb-4">
+          <View className="flex flex-row justify-between items-center mb-4">
             <CustomText className="text-white dark:text-black text-2xl">
               Payments
             </CustomText>
-          </View>
-
-          <View className="flex flex-row justify-between rounded-xl space-x-4 mb-4">
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
+            <TouchableOpacity
+              className="p-2"
+              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})} 
             >
-              <ArrowUpIcon color={colors.white} size={20} />
-              <CustomText className="text-lg text-white">
-                Loan
-              </CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_DEBT})}
-            >
-              <ArrowDownIcon color={colors.white} size={20} />
-              <CustomText className="text-lg text-white">
-                Debt
-              </CustomText>
+              <PlusIcon color={colors.white} size={24} />
             </TouchableOpacity>
           </View>
 
-          <View className="mb-4">
+          <View>
             <SearchBar screenName="Payments" />
           </View>
 

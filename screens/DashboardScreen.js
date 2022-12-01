@@ -6,7 +6,7 @@ import colors from 'tailwindcss/colors';
 import PaymentCard from '../components/payments/PaymentCard';
 import { useNavigation } from '@react-navigation/native';
 import Background from '../components/app/Background';
-import { BellIcon } from 'react-native-heroicons/outline';
+import { BellIcon, PlusCircleIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { ArrowDownIcon, ArrowUpIcon } from 'react-native-heroicons/solid';
 import { TYPE_DEBT, TYPE_LOAN } from '../constants/payment';
 
@@ -41,47 +41,18 @@ const DashboardScreen = () => {
                     $5 000
                   </CustomText>
                 </View>
-                <View className="flex flex-row justify-between p-2 rounded-xl bg-slate-800">
-                  <View className="grow items-center justify-center">
-                    <CustomText className="text-white">
-                      Debts
-                    </CustomText>
-                    <CustomText className="text-white text-lg">
-                      $500
-                    </CustomText>
-                  </View>
-                  <View className="grow items-center justify-center">
-                    <CustomText className="text-white">
-                      Loans
-                    </CustomText>
-                    <CustomText className="text-white text-lg">
-                      $1 500
-                    </CustomText>
-                  </View>
-                </View>
               </View>
             </ImageBackground>
           </View>
 
-          <View className="flex flex-row justify-between rounded-xl space-x-4 mb-8">
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
-            >
-              <ArrowUpIcon color={colors.white} size={20} />
-              <CustomText className="text-lg text-white">
-                Loan
-              </CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-red-500 rounded-lg p-3"
-              onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_DEBT})}
-            >
-              <ArrowDownIcon color={colors.white} size={20} />
-              <CustomText className="text-lg text-white">
-                Debt
-              </CustomText>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity className="flex flex-row justify-center space-x-2 grow items-center bg-ilending-sky-600 rounded-lg p-3 mb-4"
+            onPress={() => navigation.navigate('PaymentFormModal', {type: TYPE_LOAN})}
+          >
+            <PlusIcon color={colors.white} size={20} />
+            <CustomText className="text-lg text-white">
+              Add a payment
+            </CustomText>
+          </TouchableOpacity>
 
           <View className="mb-4">
             <View className="flex flex-row justify-between items-start">
@@ -96,6 +67,7 @@ const DashboardScreen = () => {
             </View>
 
             <View className="flex flex-col">
+              {/* <PaymentCard />
               <PaymentCard />
               <PaymentCard />
               <PaymentCard />
@@ -104,8 +76,7 @@ const DashboardScreen = () => {
               <PaymentCard />
               <PaymentCard />
               <PaymentCard />
-              <PaymentCard />
-              <PaymentCard />
+              <PaymentCard /> */}
             </View>
           </View>
         </ScrollView>
