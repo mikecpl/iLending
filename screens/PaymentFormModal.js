@@ -1,5 +1,5 @@
-import { ScrollView, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import { ScrollView, Switch, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import CustomText from '../components/app/CustomText';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AtSymbolIcon, XMarkIcon } from 'react-native-heroicons/solid';
@@ -14,11 +14,13 @@ import useForm from '../hooks/useForm';
 import { addDoc, collection, serverTimestamp, setDoc, Timestamp } from 'firebase/firestore'; 
 import { db } from '../firebase';
 import useAuth from '../hooks/useAuth';
+import * as ilendingColors from '../etc/colors';
 
 const PaymentFormModalScreen = () => {
   const route = useRoute();
   const { user } = useAuth();
   const { payment } = route.params;
+  const [hasUser, setHasUser] = useState(false);
   const { formValues, setFormValue, submitForm, getError } = useForm({
     occuredAt: new Date()
   });
@@ -71,27 +73,6 @@ const PaymentFormModalScreen = () => {
           </View>
           <View>
             <CustomTextInput
-              title="Name"
-              placeholder="Enter a name"
-              icon={<UserIcon color={colors.slate[400]} size={20} />}
-              errors={[]}
-              onChange={value => setFormValue('personName', value)}
-              value={formValues['personName']}
-            />
-          </View>
-          <View>
-            <CustomTextInput
-              title="Email address"
-              placeholder="Enter an email address"
-              helperText="Fill this field if you want to send notification"
-              icon={<AtSymbolIcon color={colors.slate[400]} size={20} />}
-              errors={[]}
-              onChange={value => setFormValue('personEmail', value)}
-              value={formValues['personEmail']}
-            />
-          </View>
-          <View>
-            <CustomTextInput
               title="Amount" 
               placeholder="Enter an amount"
               icon={<BanknotesIcon color={colors.slate[400]} size={20} />}
@@ -120,6 +101,43 @@ const PaymentFormModalScreen = () => {
               value={formValues['note']}
             />
           </View>
+          <View className="flex flex-row space-x-2 items-center">
+            <Switch
+              trackColor={{ false: colors.slate[600], true: ilendingColors['ilending-sky'][600] }}
+              thumbColor={colors.white}
+              ios_backgroundColor={colors.slate[600]}
+              onValueChange={setHasUser}
+              value={hasUser}
+            />
+            <CustomText className="text-slate-400 text-base my-2">
+              Joint payment
+            </CustomText>
+          </View>
+          {hasUser && (
+            <View className="flex flex-col space-y-4">
+              <View>
+                <CustomTextInput
+                  title="With who"
+                  placeholder="Enter a name"
+                  icon={<UserIcon color={colors.slate[400]} size={20} />}
+                  errors={[]}
+                  onChange={value => setFormValue('personName', value)}
+                  value={formValues['personName']}
+                />
+              </View>
+              <View>
+                <CustomTextInput
+                  title="Email address"
+                  placeholder="Enter an email address"
+                  helperText="Fill this field if you want to send notifications"
+                  icon={<AtSymbolIcon color={colors.slate[400]} size={20} />}
+                  errors={[]}
+                  onChange={value => setFormValue('personEmail', value)}
+                  value={formValues['personEmail']}
+                />
+              </View>
+            </View>
+          )}
           <TouchableOpacity className="flex flex-row items-center justify-center bg-ilending-sky-600 rounded-lg p-2 space-x-2 mb-16"
             onPress={() => {
               submit();
