@@ -14,7 +14,7 @@ const CustomTextInput = ({ value, title, icon, placeholder, helperText, errors =
   }
 
   return (
-    <View>
+    <View className="w-full">
       {title && (
         <View className="mb-1">
           <CustomText className={titleClassNames}>
@@ -29,11 +29,10 @@ const CustomTextInput = ({ value, title, icon, placeholder, helperText, errors =
           </View>
         )}
 
-        <View className="px-1">
-          <TextInput className="text-white h-10 text-lg pt-1 pb-[10px] pr-6"
-            multiline={true}
+        <View className="grow pl-1 pr-3">
+          <TextInput className="text-white h-10 text-lg leading-[22px]"
             blurOnSubmit={true}
-            numberOfLines={1}
+            maxLength={255}
             placeholder={placeholder}
             placeholderTextColor={colors.slate[400]}
             onChangeText={currentValue => {
